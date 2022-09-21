@@ -3,16 +3,16 @@ import mongoose from 'mongoose'
 
 const ProdutoModel = new Schema({
 
-    titulo: String,
-    descricao: String,
-    departamento: String,
-    marca: String,
-    price: Number,
-    qtd_stock: Number,
-    bar_codes: String,
+    titulo: {type: String},
+    descricao: {type: String},
+    departamento: {type: String},
+    marca: {type: String},
+    price: {type: Number},
+    qtd_stock: {type: Number},
+    bar_codes: {type: String},
 }, 
 {
     timestamps: true
-})
-
+});
+ 
 export default mongoose.model('Produto', ProdutoModel)
