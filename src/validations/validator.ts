@@ -1,7 +1,7 @@
-import { Request, Response } from "express"
+import { NextFunction, Request, Response } from "express"
 import Joi from 'joi'
 
-export default async (req: Request, res: Response) => {
+export default async (req: Request, res: Response, next: NextFunction) => {
     try {
         const schema = Joi.object({
             titulo: Joi.string().required(),
@@ -10,11 +10,14 @@ export default async (req: Request, res: Response) => {
             marca: Joi.string().required(),
             preco: Joi.number().min(0.01).max(1000).required(),
             qtd_stock: Joi.number().min(1).max(100000),
-            bar_codes: Joi.number().min(13).max(13)
+            bar_codes: Joi.string().length(13)
         });
 
-        const { error } = await schema.validate(req.body, {abortEarly: false})
-        if (error) throw error;
+        const { error } = await schema.validate(req.body, {abortEarly: true})
+        if (error) {
+            throw error
+        };
+        return next();
     } catch (error) {
         return res.status(400).json(error)
     }

@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import ProdutoModel from "../database/ProdutoModel"
+import ProdutoService from "../service/ProdutoService"
 
 const ProdutoController = {
 
@@ -14,10 +15,20 @@ const ProdutoController = {
             return res.json(produto)
     },
 
-    async create(req : Request, res : Response): Promise<Response> {
+   /* async create(req : Request, res : Response): Promise<Response> {
         let produto = await ProdutoModel.create(req.body)
             return res.json(produto)
-    },
+    },*/
+
+    async create(req : Request, res : Response): Promise<Response> {
+        try {
+          const { titulo, descricao, departamento, marca, price, qtd_stock, bar_codes } = req.body;
+          const result = await ProdutoService.create({ titulo, descricao, departamento, marca, price, qtd_stock, bar_codes });
+          return res.status(201).json(result);
+        } catch (error) {
+          return res.status(500).json({ error });
+        }
+      },
 
     async update(req : Request, res : Response): Promise<Response> {
         const { id } = req.params
