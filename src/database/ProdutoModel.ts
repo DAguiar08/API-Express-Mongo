@@ -11,6 +11,7 @@ const ProdutoModel = new Schema({
     qtd_stock: {type: Number},
     bar_codes: {type: String},
     stock_control_enebled: {type: Boolean}
+    
 }, 
 {
     timestamps: true

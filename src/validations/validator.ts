@@ -15,9 +15,9 @@ export default async (req: Request, res: Response, next: NextFunction) => {
         });
 
         const { error } = await schema.validate(req.body, {abortEarly: false})
-        if (error) {
-            throw error
-        };
+            if (error) {
+                throw error
+            };
         return next();
     } catch (error) {
         return res.status(400).json(error)

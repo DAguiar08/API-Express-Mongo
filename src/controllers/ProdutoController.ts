@@ -50,9 +50,8 @@ const ProdutoController = {
                         return res.status(404).json('Esse código de barras já existe!')
                     } else {
                         const result = await ProdutoService.create({ titulo, descricao, departamento, marca, price, qtd_stock, bar_codes, stock_control_enebled}); 
-                        return res.status(201).json(result);
+                            return res.status(201).json(result);
                     }
-           
         } catch (error) {
             return res.status(500).json({ error });
         }
@@ -61,9 +60,8 @@ const ProdutoController = {
     async update(req : Request, res : Response): Promise<Response> {
         try {
             const { id } = req.params
-        let produto = await ProdutoModel.findByIdAndUpdate(id, req.body)
-        
-            return res.json(`Produto ${id} alterado!`)
+            let produto = await ProdutoModel.findByIdAndUpdate(id, req.body)
+                return res.json(`Produto ${id} alterado!`)
         } catch (error) {
             return res.status(400).json({ error })
         }
@@ -73,8 +71,8 @@ const ProdutoController = {
     async updateOne(req : Request, res : Response): Promise<Response> {
         try {
             const { id } = req.params
-        let produto = await ProdutoModel.findByIdAndUpdate(id, req.body)
-            return res.json(`Produto ${id} alterado!`)
+            let produto = await ProdutoModel.findByIdAndUpdate(id, req.body)
+                return res.json(`Produto ${id} alterado!`)
         } catch (error) {
             return res.status(400).json({ error })
         }
@@ -85,8 +83,8 @@ const ProdutoController = {
     async delete(req : Request, res : Response): Promise<Response> {
         try {
             const { id } = req.params
-                let produto = await ProdutoModel.findByIdAndDelete(id)
-            return res.status(204).json()
+            let produto = await ProdutoModel.findByIdAndDelete(id)
+                return res.status(204).json()
         } catch (error) {
             return res.status(400).json({ error })
         }
