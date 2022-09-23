@@ -9,6 +9,7 @@ export interface IProduto {
     price: number;
     qtd_stock: number;
     bar_codes: string;
+    stock_control_enebled: boolean;
 }
 
 export interface IProdutoResponse {
@@ -21,4 +22,5 @@ export interface IProdutoResponse {
     qtd_stock?: number;
     bar_codes?: string;
     __v?: number;
+    stock_control_enebled?: boolean;
 }

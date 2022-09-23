@@ -5,10 +5,12 @@ import createValidation from "./validations/validator"
 const router = Router()
 
 router
-        .get('/produtos', ProdutoController.index)
-        .get('/produto/:id', ProdutoController.findById)
+        .get('/produtos', ProdutoController.index) //Pode Buscar todos assim como receber filtros
+        .get('/produto/:id', ProdutoController.findById) //Busca por ID
+        /*.get('/produto/lowstock', ProdutoController.findLowStock)*/
         .post('/produto', createValidation, ProdutoController.create)
-        .put('/produto/:id', ProdutoController.update)
+        .put('/produto/:id',createValidation, ProdutoController.update)
+        .patch('/produto/parcial/:id', ProdutoController.updateOne)
         .delete('/produto/:id', ProdutoController.delete)
 
 export default router 

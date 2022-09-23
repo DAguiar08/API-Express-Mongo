@@ -39,11 +39,16 @@ const ProdutoController = {
 
     async create(req : Request, res : Response): Promise<Response> {
         try {
-            const { titulo, descricao, departamento, marca, price, qtd_stock, bar_codes } = req.body;
-            const result = await ProdutoService.create({ titulo, descricao, departamento, marca, price, qtd_stock, bar_codes });
-                return res.status(201).json(result);
+            let { titulo, descricao, departamento, marca, price, qtd_stock, bar_codes, stock_control_enebled } = req.body;
+                if(qtd_stock < 1) {
+                    stock_control_enebled = false
+                } else {
+                    stock_control_enebled = true
+                }
+            const result = await ProdutoService.create({ titulo, descricao, departamento, marca, price, qtd_stock, bar_codes, stock_control_enebled}); 
+                    return res.status(201).json(result);
         } catch (error) {
-          return res.status(500).json({ error });
+            return res.status(500).json({ error });
         }
       },
 
@@ -57,6 +62,18 @@ const ProdutoController = {
         }
         
     },
+
+    async updateOne(req : Request, res : Response): Promise<Response> {
+        try {
+            const { id } = req.params
+        let produto = await ProdutoModel.findByIdAndUpdate(id, req.body)
+            return res.json(`Produto ${id} alterado!`)
+        } catch (error) {
+            return res.status(400).json({ error })
+        }
+        
+    },
+
 
     async delete(req : Request, res : Response): Promise<Response> {
         try {

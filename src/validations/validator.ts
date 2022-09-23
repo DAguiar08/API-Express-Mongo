@@ -9,11 +9,12 @@ export default async (req: Request, res: Response, next: NextFunction) => {
             departamento: Joi.string().required(),
             marca: Joi.string().required(),
             preco: Joi.number().min(0.01).max(1000).required(),
-            qtd_stock: Joi.number().min(1).max(100000),
-            bar_codes: Joi.string().length(13)
+            qtd_stock: Joi.number().min(0).max(100000),
+            bar_codes: Joi.string().length(13),
+            stock_control_enebled: Joi.boolean()
         });
 
-        const { error } = await schema.validate(req.body, {abortEarly: true})
+        const { error } = await schema.validate(req.body, {abortEarly: false})
         if (error) {
             throw error
         };
