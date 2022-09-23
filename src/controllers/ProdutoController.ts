@@ -45,8 +45,14 @@ const ProdutoController = {
                 } else {
                     stock_control_enebled = true
                 }
-            const result = await ProdutoService.create({ titulo, descricao, departamento, marca, price, qtd_stock, bar_codes, stock_control_enebled}); 
-                    return res.status(201).json(result);
+                const ValidaCB = await ProdutoModel.findOne({ bar_codes: req.body.bar_codes })
+                    if (ValidaCB) {
+                        return res.status(404).json('Esse código de barras já existe!')
+                    } else {
+                        const result = await ProdutoService.create({ titulo, descricao, departamento, marca, price, qtd_stock, bar_codes, stock_control_enebled}); 
+                        return res.status(201).json(result);
+                    }
+           
         } catch (error) {
             return res.status(500).json({ error });
         }
@@ -56,6 +62,7 @@ const ProdutoController = {
         try {
             const { id } = req.params
         let produto = await ProdutoModel.findByIdAndUpdate(id, req.body)
+        
             return res.json(`Produto ${id} alterado!`)
         } catch (error) {
             return res.status(400).json({ error })
