@@ -6,6 +6,7 @@ const ProdutoController = {
 
     async index(req : Request, res : Response): Promise<Response> {
         try {
+
             const payload = req.query
             let produtoFiltrado = await ProdutoModel.find(payload).limit(50)
                 return res.status(200).json(produtoFiltrado)
@@ -17,8 +18,8 @@ const ProdutoController = {
 
     /*async findLowStock(req : Request, res : Response): Promise<Response> {
         try {
-            const qtd_stock = req.query
-            let produtoFiltrado = await ProdutoModel.find(qtd_stock).limit(50)
+            const payload = req.query
+            let produtoFiltrado = await ProdutoModel.find(payload).limit(50)
                 return res.status(200).json(produtoFiltrado)
         } catch (error) {
             return res.status(400).json({ error })
@@ -60,8 +61,9 @@ const ProdutoController = {
     async update(req : Request, res : Response): Promise<Response> {
         try {
             const { id } = req.params
+            let {titulo, descricao, departamento, marca, price, qtd_stock} = req.body
             let produto = await ProdutoModel.findByIdAndUpdate(id, req.body)
-                return res.json(`Produto ${id} alterado!`)
+                return res.status(200).json({titulo, descricao, departamento, marca, price, qtd_stock})
         } catch (error) {
             return res.status(400).json({ error })
         }
@@ -72,7 +74,7 @@ const ProdutoController = {
         try {
             const { id } = req.params
             let produto = await ProdutoModel.findByIdAndUpdate(id, req.body)
-                return res.json(`Produto ${id} alterado!`)
+                return res.json(req.body)
         } catch (error) {
             return res.status(400).json({ error })
         }
