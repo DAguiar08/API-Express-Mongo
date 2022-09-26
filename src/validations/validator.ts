@@ -8,8 +8,8 @@ export default async (req: Request, res: Response, next: NextFunction) => {
             descricao: Joi.string().required(),
             departamento: Joi.string().required(),
             marca: Joi.string().required(),
-            preco: Joi.number().min(0.01).max(1000).required(),
-            qtd_stock: Joi.number().min(0).max(100000),
+            price: Joi.number().min(0.01).max(1000).required(),
+            qtd_stock: Joi.number().max(100000),
             bar_codes: Joi.string().length(13),
             stock_control_enebled: Joi.boolean()
         });
