@@ -1,16 +1,16 @@
 import { Router } from "express";
 import ProdutoController from "./controllers/ProdutoController";
-import createValidation from "./validations/validator"
+import createValidation from "./validations/validator";
 
-const router = Router()
+const router = Router();
 
 router
-        .get('/produtos', ProdutoController.index) //Pode Buscar todos assim como receber filtros
-        .get('/produto/:id', ProdutoController.findById) //Busca por ID
-        .get('/produtos/lowstock', ProdutoController.findLowStock)
-        .post('/produto', createValidation, ProdutoController.create)
-        .put('/produto/:id',createValidation, ProdutoController.update)
-        .patch('/produto/parcial/:id', ProdutoController.updateOne)
-        .delete('/produto/:id', ProdutoController.delete)
+  .get("/produtos", ProdutoController.index) //Pode Buscar todos assim como receber filtros
+  .get("/produto/:id", ProdutoController.findById) //Busca por ID
+  .get("/produtos/lowstock", ProdutoController.findLowStock)
+  .post("/produto", createValidation, ProdutoController.create)
+  .put("/produto/:id", createValidation, ProdutoController.update)
+  .patch("/produto/parcial/:id", ProdutoController.updateOne)
+  .delete("/produto/:id", ProdutoController.delete);
 
-export default router 
+export default router;
