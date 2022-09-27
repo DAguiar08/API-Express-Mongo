@@ -7,7 +7,7 @@ const router = Router()
 router
         .get('/produtos', ProdutoController.index) //Pode Buscar todos assim como receber filtros
         .get('/produto/:id', ProdutoController.findById) //Busca por ID
-        /*.get('/produto/lowstock', ProdutoController.findLowStock)*/
+        .get('/produtos/lowstock', ProdutoController.findLowStock)
         .post('/produto', createValidation, ProdutoController.create)
         .put('/produto/:id',createValidation, ProdutoController.update)
         .patch('/produto/parcial/:id', ProdutoController.updateOne)

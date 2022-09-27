@@ -6,9 +6,8 @@ const ProdutoController = {
 
     async index(req : Request, res : Response): Promise<Response> {
         try {
-
             const payload = req.query
-            let produtoFiltrado = await ProdutoModel.find(payload).limit(50)
+            let produtoFiltrado = await ProdutoModel.find({payload, stock_control_enebled: true}).limit(50)
                 return res.status(200).json(produtoFiltrado)
         } catch (error) {
             return res.status(400).json({ error })
@@ -16,16 +15,16 @@ const ProdutoController = {
         
     },
 
-    /*async findLowStock(req : Request, res : Response): Promise<Response> {
+    async findLowStock(req : Request, res : Response): Promise<Response> {
         try {
             const payload = req.query
-            let produtoFiltrado = await ProdutoModel.find(payload).limit(50)
-                return res.status(200).json(produtoFiltrado)
+            let produto = await ProdutoModel.find({payload, stock_control_enebled: true, qtd_stock: {$lte: 100}}).sort({qtd_stock: "asc"})
+                return res.status(200).json(produto)
         } catch (error) {
             return res.status(400).json({ error })
         }
         
-    },*/
+    },
 
     async findById(req : Request, res : Response): Promise<Response> {
         try {
@@ -62,8 +61,13 @@ const ProdutoController = {
         try {
             const { id } = req.params
             let {titulo, descricao, departamento, marca, price, qtd_stock} = req.body
-            let produto = await ProdutoModel.findByIdAndUpdate(id, req.body)
-                return res.status(200).json({titulo, descricao, departamento, marca, price, qtd_stock})
+            if(qtd_stock < 1) {
+                const alteraF = await ProdutoModel.findByIdAndUpdate(id, {stock_control_enebled: false})
+            } else {
+                const alteraT = await ProdutoModel.findByIdAndUpdate(id, {stock_control_enebled: true})
+            }
+                let produto = await ProdutoModel.findByIdAndUpdate(id, req.body)
+                    return res.status(200).json({titulo, descricao, departamento, marca, price, qtd_stock})
         } catch (error) {
             return res.status(400).json({ error })
         }
@@ -73,8 +77,14 @@ const ProdutoController = {
     async updateOne(req : Request, res : Response): Promise<Response> {
         try {
             const { id } = req.params
-            let produto = await ProdutoModel.findByIdAndUpdate(id, req.body)
-                return res.json(req.body)
+            let {titulo, descricao, departamento, marca, price, qtd_stock} = req.body
+            if(qtd_stock < 1) {
+                const alteraF = await ProdutoModel.findByIdAndUpdate(id, {stock_control_enebled: false})
+            } else {
+                const alteraT = await ProdutoModel.findByIdAndUpdate(id, {stock_control_enebled: true})
+            }
+                let produto = await ProdutoModel.findByIdAndUpdate(id, req.body)
+                    return res.status(200).json({titulo, descricao, departamento, marca, price, qtd_stock})
         } catch (error) {
             return res.status(400).json({ error })
         }
