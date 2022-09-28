@@ -6,10 +6,10 @@ const ProdutoController = {
   async index(req: Request, res: Response): Promise<Response> {
     try {
       const payload = req.query;
-      const produtoFiltrado = await ProdutoModel.find({
+      const produtoFiltrado = await ProdutoService.find({
         payload,
         stock_control_enebled: true,
-      }).limit(50);
+      });
       return res.status(200).json(produtoFiltrado);
     } catch (error) {
       return res.status(400).json({ error });
@@ -19,11 +19,11 @@ const ProdutoController = {
   async findLowStock(req: Request, res: Response): Promise<Response> {
     try {
       const payload = req.query;
-      const produto = await ProdutoModel.find({
+      const produto = await ProdutoService.find({
         payload,
         stock_control_enebled: true,
         qtd_stock: { $lte: 100 },
-      }).sort({ qtd_stock: "asc" });
+      });
       return res.status(200).json(produto);
     } catch (error) {
       return res.status(400).json({ error });
@@ -33,7 +33,7 @@ const ProdutoController = {
   async findById(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
-      const produto = await ProdutoModel.findById(id);
+      const produto = await ProdutoService.findById(id);
       return res.json(produto);
     } catch (error) {
       return res.status(400).json({ error });
@@ -94,7 +94,7 @@ const ProdutoController = {
           stock_control_enebled: true,
         });
       }
-      const produto = await ProdutoModel.findByIdAndUpdate(id, req.body);
+      const produto = await ProdutoService.update(id);
       return res
         .status(200)
         .json({ titulo, descricao, departamento, marca, price, qtd_stock });
@@ -117,7 +117,7 @@ const ProdutoController = {
           stock_control_enebled: true,
         });
       }
-      const produto = await ProdutoModel.findByIdAndUpdate(id, req.body);
+      const produto = await ProdutoService.update(id);
       return res
         .status(200)
         .json({ titulo, descricao, departamento, marca, price, qtd_stock });
@@ -129,7 +129,7 @@ const ProdutoController = {
   async delete(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
-      const produto = await ProdutoModel.findByIdAndDelete(id);
+      const produto = await ProdutoService.delete(id);
       return res.status(204).json();
     } catch (error) {
       return res.status(400).json({ error });

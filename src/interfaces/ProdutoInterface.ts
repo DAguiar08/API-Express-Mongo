@@ -12,7 +12,6 @@ export interface IProduto {
 }
 
 export interface IProdutoResponse {
-  _id?: Types.ObjectId;
   titulo?: string;
   descricao?: string;
   departamento?: string;
@@ -20,6 +19,7 @@ export interface IProdutoResponse {
   price?: number;
   qtd_stock?: number;
   bar_codes?: string;
-  __v?: number;
   stock_control_enebled?: boolean;
+  __v?: number;
+  _id?: Types.ObjectId;
 }
