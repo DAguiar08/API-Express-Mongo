@@ -1,10 +1,10 @@
 import { Types } from "mongoose";
 
 export interface IProduto {
-  titulo: string;
-  descricao: string;
-  departamento: string;
-  marca: string;
+  title: string;
+  description: string;
+  departament: string;
+  brand: string;
   price: number;
   qtd_stock: number;
   bar_codes: string;
@@ -12,14 +12,24 @@ export interface IProduto {
 }
 
 export interface IProdutoResponse {
-  titulo?: string;
-  descricao?: string;
-  departamento?: string;
-  marca?: string;
+  title?: string;
+  description?: string;
+  departament?: string;
+  brand?: string;
   price?: number;
   qtd_stock?: number;
   bar_codes?: string;
   stock_control_enebled?: boolean;
   __v?: number;
   _id?: Types.ObjectId;
+}
+
+export interface csv {
+  title: string;
+  description: string;
+  departament: string;
+  brand: string;
+  price: number;
+  qtd_stock: number;
+  bar_codes: string;
 }

@@ -1,6 +1,8 @@
+/* eslint-disable prefer-const */
 import { Request, Response } from "express";
 import ProdutoModel from "../database/ProdutoModel";
 import ProdutoService from "../service/ProdutoService";
+import {readFile} from 'fs/promises'
 
 const ProdutoController = {
   async index(req: Request, res: Response): Promise<Response> {
@@ -43,10 +45,10 @@ const ProdutoController = {
   async create(req: Request, res: Response): Promise<Response> {
     try {
       let {
-        titulo,
-        descricao,
-        departamento,
-        marca,
+        title,
+        description,
+        departament,
+        brand,
         price,
         qtd_stock,
         bar_codes,
@@ -64,10 +66,10 @@ const ProdutoController = {
         return res.status(404).json("Esse código de barras já existe!");
       } else {
         const result = await ProdutoService.create({
-          titulo,
-          descricao,
-          departamento,
-          marca,
+          title,
+          description,
+          departament,
+          brand,
           price,
           qtd_stock,
           bar_codes,
@@ -83,21 +85,21 @@ const ProdutoController = {
   async update(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
-      let { titulo, descricao, departamento, marca, price, qtd_stock } =
+      let { title, description, departament, brand, price, qtd_stock } =
         req.body;
       if (qtd_stock < 1) {
-        const alteraF = await ProdutoModel.findByIdAndUpdate(id, {
+         ProdutoModel.findByIdAndUpdate(id, {
           stock_control_enebled: false,
         });
       } else {
-        const alteraT = await ProdutoModel.findByIdAndUpdate(id, {
+         ProdutoModel.findByIdAndUpdate(id, {
           stock_control_enebled: true,
         });
       }
-      const produto = await ProdutoService.update(id);
+       await ProdutoService.update(id);
       return res
         .status(200)
-        .json({ titulo, descricao, departamento, marca, price, qtd_stock });
+        .json({ title, description, departament, brand, price, qtd_stock });
     } catch (error) {
       return res.status(400).json({ error });
     }
@@ -106,21 +108,21 @@ const ProdutoController = {
   async updateOne(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
-      let { titulo, descricao, departamento, marca, price, qtd_stock } =
+      let { title, description, departament, brand, price, qtd_stock } =
         req.body;
       if (qtd_stock < 1) {
-        const alteraF = await ProdutoModel.findByIdAndUpdate(id, {
+          await ProdutoModel.findByIdAndUpdate(id, {
           stock_control_enebled: false,
         });
       } else {
-        const alteraT = await ProdutoModel.findByIdAndUpdate(id, {
+        await ProdutoModel.findByIdAndUpdate(id, {
           stock_control_enebled: true,
         });
       }
-      const produto = await ProdutoService.update(id);
+       await ProdutoService.update(id);
       return res
         .status(200)
-        .json({ titulo, descricao, departamento, marca, price, qtd_stock });
+        .json({ title, description, departament, brand, price, qtd_stock });
     } catch (error) {
       return res.status(400).json({ error });
     }
@@ -129,12 +131,41 @@ const ProdutoController = {
   async delete(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
-      const produto = await ProdutoService.delete(id);
+      await ProdutoService.delete(id);
       return res.status(204).json();
     } catch (error) {
       return res.status(400).json({ error });
     }
   },
+
+  async criaCsv(req: Request, res: Response){
+    try {
+      const readingFile = (await readFile('test.csv')).toString()
+      const splitFile = readingFile.split('\r\n')
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const [header, ...files] = splitFile
+      const arr = []     
+      for(const i of files) {
+        const splitFiles = i.split(',')
+        arr.push({
+          title:splitFiles[0],
+          description:splitFiles[1],
+          departament:splitFiles[2],
+          brand: splitFiles[3],
+          price: Number(splitFiles[4]),
+          qtd_stock: Number(splitFiles[5]),
+          bar_codes: splitFiles[6]
+        })
+      }
+        const payload = arr
+        console.log(payload)
+        
+    } catch (error) {
+      return res.status(400).json("Import não deu certo")
+    }
+    
+  
+}
 };
 
 export default ProdutoController;
