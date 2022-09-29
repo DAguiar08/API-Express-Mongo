@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IProduto, IProdutoResponse } from "../interfaces/ProdutoInterface";
 import ProdutoRepository from "../repository/ProdutoRepository";
 
@@ -24,6 +25,11 @@ class ProdutoService {
 
   async update(payload: any): Promise<IProdutoResponse> {
     const result = await ProdutoRepository.uptade(payload);
+    return result;
+  }
+
+  async createCSV(payload: any): Promise<IProdutoResponse> {
+    const result = await ProdutoRepository.createCsv(payload);
     return result;
   }
 }
