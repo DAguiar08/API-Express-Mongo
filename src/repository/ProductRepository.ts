@@ -1,38 +1,38 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { IProduct, IProductResponse } from "../interfaces/ProductInterface";
-import ProdutoModel from "../database/ProductModel";
+import ProductModel from "../database/ProductModel";
 import { FilterQuery } from "mongoose";
-import Produto from "../database/ProductModel";
+import Product from "../database/ProductModel";
 
-class ProdutoRepository {
+class ProductRepository {
   async create(payload: IProduct): Promise<IProductResponse> {
-    return ProdutoModel.create(payload);
+    return ProductModel.create(payload);
   }
   async find(
     payload: FilterQuery<IProduct>
-  ): Promise<typeof Produto | unknown> {
-    return await ProdutoModel.find(payload).limit(50);
+  ): Promise<typeof Product | unknown> {
+    return await ProductModel.find(payload).limit(50);
   }
 
   async findLowStock(
     payload: FilterQuery<IProduct>
-  ): Promise<typeof Produto | unknown> {
-    return await ProdutoModel.find(payload)
+  ): Promise<typeof Product | unknown> {
+    return await ProductModel.find(payload)
       .limit(50)
       .sort({ qtd_stock: "asc" });
   }
 
-  async findById(id: string): Promise<typeof Produto | null> {
-    return ProdutoModel.findById(id);
+  async findById(id: string): Promise<typeof Product | null> {
+    return ProductModel.findById(id);
   }
 
-  async delete(id: string): Promise<typeof Produto | null> {
-    return ProdutoModel.findByIdAndDelete(id);
+  async delete(id: string): Promise<typeof Product | null> {
+    return ProductModel.findByIdAndDelete(id);
   }
 
-  async update(id: string, payload: IProduct): Promise<typeof Produto | null> {
-    return ProdutoModel.findByIdAndUpdate(id, payload);
+  async update(id: string, payload: IProduct): Promise<typeof Product | null> {
+    return ProductModel.findByIdAndUpdate(id, payload);
   }
 }
 
-export default new ProdutoRepository();
+export default new ProductRepository();

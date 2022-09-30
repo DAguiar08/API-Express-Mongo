@@ -1,11 +1,11 @@
-import ProdutoRepository from "../repository/ProductRepository";
-import ProdutoModel from "../database/ProductModel";
+import ProductRepository from "../repository/ProductRepository";
+import ProductModel from "../database/ProductModel";
 import { Request, Response } from "express";
 
 class ProductService {
   async create(req: Request, res: Response) {
     const payload = req.body;
-    const ValidateCB = await ProdutoModel.findOne({
+    const ValidateCB = await ProductModel.findOne({
       bar_codes: payload.bar_codes,
     });
     if (ValidateCB) {
@@ -16,20 +16,20 @@ class ProductService {
       } else {
         payload.stock_control_enebled = true;
       }
-      const result = await ProdutoRepository.create(payload);
+      const result = await ProductRepository.create(payload);
       return res.status(201).json(result);
     }
   }
 
   async find(req: Request, res: Response) {
-    const result = await ProdutoRepository.find({
+    const result = await ProductRepository.find({
       stock_control_enebled: true,
     });
     return res.status(200).json(result);
   }
 
   async findLowStock(req: Request, res: Response) {
-    const result = await ProdutoRepository.findLowStock({
+    const result = await ProductRepository.findLowStock({
       stock_control_enebled: true,
       qtd_stock: { $lte: 100 },
     });
@@ -37,19 +37,19 @@ class ProductService {
   }
 
   async findById(req: Request, res: Response) {
-    const Product = await ProdutoRepository.findById(req.params.id);
+    const Product = await ProductRepository.findById(req.params.id);
     return res.status(200).json(Product);
   }
 
   async delete(req: Request, res: Response) {
-    await ProdutoRepository.delete(req.params.id);
+    await ProductRepository.delete(req.params.id);
     return res.status(200).json();
   }
 
   async update(req: Request, res: Response) {
     const { id } = req.params;
     const payload = req.body;
-    const ValidateCB = await ProdutoModel.findOne({
+    const ValidateCB = await ProductModel.findOne({
       bar_codes: payload.bar_codes,
     });
     if (ValidateCB) {
@@ -61,7 +61,7 @@ class ProductService {
         payload.stock_control_enebled = true;
       }
     }
-    await ProdutoRepository.update(id, payload);
+    await ProductRepository.update(id, payload);
     return res.status(200).json(req.body);
   }
 }

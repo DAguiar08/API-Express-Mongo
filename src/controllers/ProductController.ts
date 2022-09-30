@@ -1,12 +1,12 @@
 /* eslint-disable prefer-const */
 import { Request, Response } from "express";
-import ProdutoService from "../service/ProductService";
+import ProductService from "../service/ProductService";
 import { readFile } from "fs/promises";
 
 const ProductController = {
   async index(req: Request, res: Response) {
     try {
-      await ProdutoService.find(req, res);
+      await ProductService.find(req, res);
     } catch (error) {
       return res.status(400).json({ error });
     }
@@ -14,7 +14,7 @@ const ProductController = {
 
   async findLowStock(req: Request, res: Response) {
     try {
-      await ProdutoService.findLowStock(req, res);
+      await ProductService.findLowStock(req, res);
     } catch (error) {
       return res.status(400).json({ error });
     }
@@ -22,7 +22,7 @@ const ProductController = {
 
   async findById(req: Request, res: Response) {
     try {
-      await ProdutoService.findById(req, res);
+      await ProductService.findById(req, res);
     } catch (error) {
       return res.status(400).json({ error });
     }
@@ -30,7 +30,7 @@ const ProductController = {
 
   async create(req: Request, res: Response) {
     try {
-      await ProdutoService.create(req, res);
+      await ProductService.create(req, res);
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -38,7 +38,7 @@ const ProductController = {
 
   async update(req: Request, res: Response) {
     try {
-      await ProdutoService.update(req, res);
+      await ProductService.update(req, res);
     } catch (error) {
       return res.status(400).json({ error });
     }
@@ -46,7 +46,7 @@ const ProductController = {
 
   async updateOne(req: Request, res: Response) {
     try {
-      await ProdutoService.update(req, res);
+      await ProductService.update(req, res);
     } catch (error) {
       return res.status(400).json({ error });
     }
@@ -54,7 +54,7 @@ const ProductController = {
 
   async delete(req: Request, res: Response) {
     try {
-      await ProdutoService.delete(req, res);
+      await ProductService.delete(req, res);
     } catch (error) {
       return res.status(400).json({ error });
     }
