@@ -1,15 +1,15 @@
-import ProdutoRepository from "../repository/ProdutoRepository";
-import ProdutoModel from "../database/ProdutoModel";
+import ProdutoRepository from "../repository/ProductRepository";
+import ProdutoModel from "../database/ProductModel";
 import { Request, Response } from "express";
 
-class ProdutoService {
+class ProductService {
   async create(req: Request, res: Response) {
     const payload = req.body;
-    const ValidaCB = await ProdutoModel.findOne({
+    const ValidateCB = await ProdutoModel.findOne({
       bar_codes: payload.bar_codes,
     });
-    if (ValidaCB) {
-      throw console.error("Esse Código de barras já existe");
+    if (ValidateCB) {
+      throw console.error("This code bars already exist");
     } else {
       if (payload.qtd_stock < 1) {
         payload.stock_control_enebled = false;
@@ -49,11 +49,11 @@ class ProdutoService {
   async update(req: Request, res: Response) {
     const { id } = req.params;
     const payload = req.body;
-    const ValidaCB = await ProdutoModel.findOne({
+    const ValidateCB = await ProdutoModel.findOne({
       bar_codes: payload.bar_codes,
     });
-    if (ValidaCB) {
-      throw console.error("Esse código de barras já existe");
+    if (ValidateCB) {
+      throw console.error("Esse código de This já existe");
     } else {
       if (payload.qtd_stock < 1) {
         payload.stock_control_enebled = false;
@@ -66,4 +66,4 @@ class ProdutoService {
   }
 }
 
-export default new ProdutoService();
+export default new ProductService();

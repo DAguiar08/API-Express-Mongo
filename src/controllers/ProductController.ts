@@ -1,9 +1,9 @@
 /* eslint-disable prefer-const */
 import { Request, Response } from "express";
-import ProdutoService from "../service/ProdutoService";
+import ProdutoService from "../service/ProductService";
 import { readFile } from "fs/promises";
 
-const ProdutoController = {
+const ProductController = {
   async index(req: Request, res: Response) {
     try {
       await ProdutoService.find(req, res);
@@ -87,4 +87,4 @@ const ProdutoController = {
   },
 };
 
-export default ProdutoController;
+export default ProductController;

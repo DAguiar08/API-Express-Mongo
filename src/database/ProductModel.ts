@@ -1,8 +1,8 @@
 import { Schema } from "mongoose";
 import mongoose from "mongoose";
-import { IProduto } from "../interfaces/ProdutoInterface";
+import { IProduct } from "../interfaces/ProductInterface";
 
-const ProdutoModel = new Schema(
+const ProductModel = new Schema(
   {
     title: { type: String, required: true, trim: true },
     description: { type: String, required: true, trim: true },
@@ -18,6 +18,6 @@ const ProdutoModel = new Schema(
   }
 );
 
-const Produto = mongoose.model<IProduto>("Produto", ProdutoModel);
+const Product = mongoose.model<IProduct>("Product", ProductModel);
 
-export default Produto;
+export default Product;

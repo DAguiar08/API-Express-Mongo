@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { IProduto, IProdutoResponse } from "../interfaces/ProdutoInterface";
-import ProdutoModel from "../database/ProdutoModel";
+import { IProduct, IProductResponse } from "../interfaces/ProductInterface";
+import ProdutoModel from "../database/ProductModel";
 import { FilterQuery } from "mongoose";
-import Produto from "../database/ProdutoModel";
+import Produto from "../database/ProductModel";
 
 class ProdutoRepository {
-  async create(payload: IProduto): Promise<IProdutoResponse> {
+  async create(payload: IProduct): Promise<IProductResponse> {
     return ProdutoModel.create(payload);
   }
   async find(
-    payload: FilterQuery<IProduto>
+    payload: FilterQuery<IProduct>
   ): Promise<typeof Produto | unknown> {
     return await ProdutoModel.find(payload).limit(50);
   }
 
   async findLowStock(
-    payload: FilterQuery<IProduto>
+    payload: FilterQuery<IProduct>
   ): Promise<typeof Produto | unknown> {
     return await ProdutoModel.find(payload)
       .limit(50)
@@ -30,7 +30,7 @@ class ProdutoRepository {
     return ProdutoModel.findByIdAndDelete(id);
   }
 
-  async update(id: string, payload: IProduto): Promise<typeof Produto | null> {
+  async update(id: string, payload: IProduct): Promise<typeof Produto | null> {
     return ProdutoModel.findByIdAndUpdate(id, payload);
   }
 }

@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-export interface IProduto {
+export interface IProduct {
   title: string;
   description: string;
   departament: string;
@@ -11,7 +11,7 @@ export interface IProduto {
   stock_control_enebled: boolean;
 }
 
-export interface IProdutoResponse {
+export interface IProductResponse {
   title: string;
   description: string;
   departament: string;
