@@ -4,14 +4,14 @@ import { IProduto } from "../interfaces/ProdutoInterface";
 
 const ProdutoModel = new Schema(
   {
-    titulo: { type: String, required: true },
-    descricao: { type: String, required: true },
-    departamento: { type: String, required: true },
-    marca: { type: String, required: true },
-    price: { type: Number, required: true },
-    qtd_stock: { type: Number, required: true },
-    bar_codes: { type: String, required: true },
-    stock_control_enebled: { type: Boolean, required: true },
+    title: { type: String, required: true, trim: true },
+    description: { type: String, required: true, trim: true },
+    departament: { type: String, required: true, trim: true },
+    brand: { type: String, required: true, trim: true },
+    price: { type: Number, required: true, min: 0.01, max: 1000 },
+    qtd_stock: { type: Number, required: true, max: 100000 },
+    bar_codes: { type: String, required: true, trim: true },
+    stock_control_enebled: { type: Boolean },
   },
   {
     timestamps: true,
