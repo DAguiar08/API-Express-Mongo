@@ -12,16 +12,16 @@ export interface IProduto {
 }
 
 export interface IProdutoResponse {
-  title?: string;
-  description?: string;
-  departament?: string;
-  brand?: string;
-  price?: number;
-  qtd_stock?: number;
-  bar_codes?: string;
-  stock_control_enebled?: boolean;
+  title: string;
+  description: string;
+  departament: string;
+  brand: string;
+  price: number;
+  qtd_stock: number;
+  bar_codes: string;
+  stock_control_enebled: boolean;
   __v?: number;
-  _id?: Types.ObjectId;
+  _id: Types.ObjectId;
 }
 
 export interface csv {
