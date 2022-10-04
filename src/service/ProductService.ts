@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import ProductRepository from "../repository/ProductRepository";
 import ProductModel from "../database/ProductModel";
 import { Request, Response } from "express";
@@ -18,8 +19,7 @@ class ProductService {
       } else {
         payload.stock_control_enebled = true;
       }
-      const result = await ProductRepository.create(payload);
-      return res.status(201).json(result);
+      await ProductRepository.create(payload);
     }
   }
 
@@ -27,7 +27,7 @@ class ProductService {
     const result = await ProductRepository.find({
       stock_control_enebled: true,
     });
-    return res.status(200).json(result);
+    return result;
   }
 
   async findLowStock(req: Request, res: Response) {
@@ -35,17 +35,17 @@ class ProductService {
       stock_control_enebled: true,
       qtd_stock: { $lte: 100 },
     });
-    return res.status(200).json(result);
+    return result;
   }
 
   async findById(req: Request, res: Response) {
-    const Product = await ProductRepository.findById(req.params.id);
-    return res.status(200).json(Product);
+    const result = await ProductRepository.findById(req.params.id);
+    return result;
   }
 
   async delete(req: Request, res: Response) {
-    await ProductRepository.delete(req.params.id);
-    return res.status(200).json();
+    const result = await ProductRepository.delete(req.params.id);
+    return result;
   }
 
   async update(req: Request, res: Response) {
@@ -56,7 +56,7 @@ class ProductService {
       bar_codes: payload.bar_codes,
     });
     if (ValidateCB) {
-      throw console.error("Esse código de This já existe");
+      throw console.error("This code bars already exists");
     } else {
       if (payload.qtd_stock < 1) {
         payload.stock_control_enebled = false;
@@ -66,15 +66,13 @@ class ProductService {
         payload.updated_at = data;
       }
     }
-    await ProductRepository.update(id, payload);
-    return res.status(200).json(req.body);
+    const result = await ProductRepository.update(id, payload);
+    return result;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async createCSV(req: Request, res: Response) {
     const readingFile = (await readFile("test.csv")).toString();
     const splitFile = readingFile.split("\r\n");
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [header, ...files] = splitFile;
     const arr = [];
     const data = new Date();
@@ -94,6 +92,9 @@ class ProductService {
     for (const i of files) {
       const splitFiles = i.split(",");
       const ValidateQS = Number(splitFiles[5]);
+      const ValidateCB = await ProductModel.findOne({
+        bar_codes: splitFiles[6]
+      })
       if (ValidateQS < 1) {
         arr.push({
           title: splitFiles[0],
@@ -110,8 +111,12 @@ class ProductService {
         if (error) {
           throw error;
         }
-        await ProductRepository.createCSV(arr);
-        return res.status(200).json("Cadastro Concluido")
+        if(ValidateCB) {
+          throw console.error("This code bars already exists")
+        } else {
+        const result = await ProductRepository.createCSV(arr);
+        return result;
+      }
       } else {
         arr.push({
           title: splitFiles[0],
@@ -128,8 +133,12 @@ class ProductService {
         if (error) {
           throw error;
         }
-        await ProductRepository.createCSV(arr);
-        return res.status(200).json("Cadastro Concluido")
+        if(ValidateCB) {
+          throw console.error("This code bars already exists")
+        } else {
+        const result = await ProductRepository.createCSV(arr);
+        return result;
+      }
       }
     }
   }
