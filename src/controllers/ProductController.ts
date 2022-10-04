@@ -5,7 +5,8 @@ import ProductService from "../service/ProductService";
 const ProductController = {
   async index(req: Request, res: Response) {
     try {
-      await ProductService.find(req, res);
+      const result = await ProductService.find(req, res);
+      return res.status(200).json(result)
     } catch (error) {
       return res.status(400).json({ error });
     }
@@ -13,7 +14,8 @@ const ProductController = {
 
   async findLowStock(req: Request, res: Response) {
     try {
-      await ProductService.findLowStock(req, res);
+      const result = await ProductService.findLowStock(req, res);
+      return res.status(200).json(result)
     } catch (error) {
       return res.status(400).json({ error });
     }
@@ -21,7 +23,8 @@ const ProductController = {
 
   async findById(req: Request, res: Response) {
     try {
-      await ProductService.findById(req, res);
+      const result = await ProductService.findById(req, res);
+      return res.status(200).json(result)
     } catch (error) {
       return res.status(400).json({ error });
     }
@@ -29,7 +32,8 @@ const ProductController = {
 
   async create(req: Request, res: Response) {
     try {
-      await ProductService.create(req, res);
+      const result = await ProductService.create(req, res);
+      return res.status(201).json(result);
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -37,7 +41,8 @@ const ProductController = {
 
   async update(req: Request, res: Response) {
     try {
-      await ProductService.update(req, res);
+      const result = await ProductService.update(req, res);
+      return res.status(200).json(result)
     } catch (error) {
       return res.status(400).json({ error });
     }
@@ -45,7 +50,8 @@ const ProductController = {
 
   async updateOne(req: Request, res: Response) {
     try {
-      await ProductService.update(req, res);
+      const result = await ProductService.update(req, res);
+      return res.status(200).json(result)
     } catch (error) {
       return res.status(400).json({ error });
     }
@@ -54,6 +60,7 @@ const ProductController = {
   async delete(req: Request, res: Response) {
     try {
       await ProductService.delete(req, res);
+      return res.status(200).json()
     } catch (error) {
       return res.status(400).json({ error });
     }
@@ -61,7 +68,8 @@ const ProductController = {
 
   async createCsv(req: Request, res: Response) {
     try {
-      await ProductService.createCSV(req, res);
+      const result = await ProductService.createCSV(req, res);
+      return res.status(200).json(result)
     } catch (error) {
       return res.status(400).json({ error });
     }
