@@ -77,13 +77,25 @@ class ProductService {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [header, ...files] = splitFile;
     const arr = [];
-    const arr2 = [];
     const data = new Date();
+    const schema = Joi.array().items(
+      Joi.object({
+        title: Joi.string().required().trim(),
+        description: Joi.string().required().trim(),
+        departament: Joi.string().required().trim(),
+        brand: Joi.string().required().trim(),
+        price: Joi.number().min(0.01).max(1000).required(),
+        qtd_stock: Joi.number().max(100000).required(),
+        bar_codes: Joi.string().length(13).required().trim()  ,
+        stock_control_enebled: Joi.boolean(),
+        created_at: Joi.date(),
+      })
+    );
     for (const i of files) {
       const splitFiles = i.split(",");
       const ValidateQS = Number(splitFiles[5]);
       if (ValidateQS < 1) {
-        arr2.push({
+        arr.push({
           title: splitFiles[0],
           description: splitFiles[1],
           departament: splitFiles[2],
@@ -94,24 +106,12 @@ class ProductService {
           stock_control_enebled: Boolean(false),
           created_at: data,
         });
-        const schema = Joi.array().items(
-          Joi.object({
-            title: Joi.string().required().trim(),
-            description: Joi.string().required().trim(),
-            departament: Joi.string().required().trim(),
-            brand: Joi.string().required().trim(),
-            price: Joi.number().min(0.01).max(1000).required(),
-            qtd_stock: Joi.number().max(100000).required(),
-            bar_codes: Joi.string().length(13).required().trim(),
-            stock_control_enebled: Joi.boolean(),
-            created_at: Joi.date(),
-          })
-        );
-        const { error } = await schema.validate(arr2, { abortEarly: false });
+        const { error } = await schema.validate(arr, { abortEarly: false });
         if (error) {
           throw error;
         }
-        await ProductRepository.createCSV(arr2);
+        await ProductRepository.createCSV(arr);
+        return res.status(200).json("Cadastro Concluido")
       } else {
         arr.push({
           title: splitFiles[0],
@@ -124,24 +124,12 @@ class ProductService {
           stock_control_enebled: Boolean(true),
           created_at: data,
         });
-        const schema = Joi.array().items(
-          Joi.object({
-            title: Joi.string().required().trim(),
-            description: Joi.string().required().trim(),
-            departament: Joi.string().required().trim(),
-            brand: Joi.string().required().trim(),
-            price: Joi.number().min(0.01).max(1000).required(),
-            qtd_stock: Joi.number().max(100000).required(),
-            bar_codes: Joi.string().length(13).required().trim(),
-            stock_control_enebled: Joi.boolean(),
-            created_at: Joi.date(),
-          })
-        );
         const { error } = await schema.validate(arr, { abortEarly: false });
         if (error) {
           throw error;
         }
         await ProductRepository.createCSV(arr);
+        return res.status(200).json("Cadastro Concluido")
       }
     }
   }
