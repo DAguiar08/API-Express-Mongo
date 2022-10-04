@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { IProduct, IProductResponse } from "../interfaces/ProductInterface";
+import {IProduct, IProductResponse,} from "../interfaces/ProductInterface";
 import ProductModel from "../database/ProductModel";
 import { FilterQuery } from "mongoose";
 import Product from "../database/ProductModel";
@@ -32,6 +32,10 @@ class ProductRepository {
 
   async update(id: string, payload: IProduct): Promise<typeof Product | null> {
     return ProductModel.findByIdAndUpdate(id, payload);
+  }
+
+  async createCSV(payload: Array<IProduct>): Promise<typeof Product | unknown> {
+    return Product.collection.insertMany(payload);
   }
 }
 
