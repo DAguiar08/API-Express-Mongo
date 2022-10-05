@@ -1,0 +1,314 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "CompassMart API",
+        "description": "Essa API tem como objetivo a manipulação de produtos",
+        "termsOfService": "http://localhost:3000/terms",
+        "contact": {
+            "email": "davibenribaguiar@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "description": "API de teste"
+        }
+    ],
+    "paths": {
+        "/products": {
+            "get": {
+                "summary": "Busca por todos os produtos",
+                "description": "Busca por todos os produtos com Stock_control_enebled: true",
+                "tags":["Products"],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+        },
+        "/products/lowstock" : {
+            "get": {
+                "summary": "Busca por todos os produtos com estoque baixo",
+                "description": "Busca por produtos com a info 'qtd_stock' abaixo de 100",
+                "tags":["Products"],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/product/{id}": {
+            "get": {
+                "summary": "Busca por um produto em especifico",
+                "description": "Busca em especifico por um produto utilizando o id como parametro",
+                "tags": ["Products"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id do produto para busca",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "put": {
+                "description": "Altera o produto",
+                "summary": "Altera o produto recebendo o id como parametro",
+                "tags": ["Products"],
+                "parameters":  [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id do produto para busca",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Product"
+                            },
+                            "examples": {
+                                "product": {
+                                    "value": {
+                                        "title": "Oleo de Soja 500ml",
+                                        "description": "Oleo de soja contento 500ml fabricado pela Soya, com validade X e lote X",
+                                        "departament": "Mercearia",
+                                        "brand": "Soya",
+                                        "qtd_stock": 100,
+                                        "price": 20.00,
+                                        "bar_codes": "123asd123asdp"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "patch": {
+                "description": "Altera o produto sem precisar passar todo o body",
+                "summary": "Altera o produto recebendo o id como parametro",
+                "tags": ["Products"],
+                "parameters":  [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id do produto para busca",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Product"
+                            },
+                            "examples": {
+                                "product": {
+                                    "value": {
+                                        "title": "Oleo de Soja 500ml"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deleta produtos pelo id",
+                "description": "Essa rota será responsavel por deletar um produto recebendo o id como parametro",
+                "tags":["Products"],
+                "parameters":  [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id do produto para busca",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/product": {
+            "post": {
+                "summary": "Criar novos produtos manualmente",
+                "description": "Essa rota será criar produtos manualmente através do req.body",
+                "tags": ["Products"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Product"
+                            },
+                            "examples": {
+                                "product": {
+                                    "value": {
+                                        "title": "Oleo de Soja 500ml",
+                                        "description": "Oleo de soja contento 500ml fabricado pela Soya, com validade X e lote X",
+                                        "departament": "Mercearia",
+                                        "brand": "Soya",
+                                        "qtd_stock": 100,
+                                        "price": 20.00,
+                                        "bar_codes": "123asd123asdp"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref":"#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/products/createCSV": {
+            "post": {
+                "summary": "Criar novos produtos através de um arquivo CSV",
+                "description": "Essa rota será responsavel por cadastrar novos produtos através de um .CSV",
+                "tags": ["Products"],
+                "response": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Product": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "departament": {
+                        "type": "string"
+                    },
+                    "brand": {
+                        "type": "string"
+                    },
+                    "qtd_stock": {
+                        "type": "number"
+                    },
+                    "price": {
+                        "type": "number"
+                    },
+                    "bar_codes": {
+                        "type": "string"
+                    } 
+                }
+            }
+        }
+    }
+}
+    
