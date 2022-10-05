@@ -35,7 +35,7 @@ const ProductController = {
       const result = await ProductService.create(req, res);
       return res.status(201).json(result);
     } catch (error) {
-      return res.status(500).json({ error });
+      return res.status(400).json({ error });
     }
   },
 
@@ -68,8 +68,8 @@ const ProductController = {
 
   async createCsv(req: Request, res: Response) {
     try {
-      const result = await ProductService.createCSV(req, res);
-      return res.status(200).json(result)
+      await ProductService.createCSV(req, res);
+      return res.status(200).json("Produtos Cadastrados")
     } catch (error) {
       return res.status(400).json({ error });
     }

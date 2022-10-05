@@ -75,6 +75,7 @@ class ProductService {
     const splitFile = readingFile.split("\r\n");
     const [header, ...files] = splitFile;
     const arr = [];
+    const arr2 = [];
     const data = new Date();
     const schema = Joi.array().items(
       Joi.object({
@@ -96,7 +97,7 @@ class ProductService {
         bar_codes: splitFiles[6]
       })
       if (ValidateQS < 1) {
-        arr.push({
+        arr2.push({
           title: splitFiles[0],
           description: splitFiles[1],
           departament: splitFiles[2],
@@ -107,15 +108,14 @@ class ProductService {
           stock_control_enebled: Boolean(false),
           created_at: data,
         });
-        const { error } = await schema.validate(arr, { abortEarly: false });
+        const { error } = await schema.validate(arr2, { abortEarly: false });
         if (error) {
           throw error;
         }
         if(ValidateCB) {
           throw console.error("This code bars already exists")
         } else {
-        const result = await ProductRepository.createCSV(arr);
-        return result;
+        await ProductRepository.createCSV(arr2);
       }
       } else {
         arr.push({
@@ -136,8 +136,7 @@ class ProductService {
         if(ValidateCB) {
           throw console.error("This code bars already exists")
         } else {
-        const result = await ProductRepository.createCSV(arr);
-        return result;
+        await ProductRepository.createCSV(arr);
       }
       }
     }
