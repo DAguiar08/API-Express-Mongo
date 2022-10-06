@@ -32,5 +32,4 @@ export interface csv {
   price: number;
   qtd_stock: number;
   bar_codes: string;
-  stock_control_enebled: boolean;
 }
