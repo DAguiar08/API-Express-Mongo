@@ -26,7 +26,7 @@ const ProductController = {
       const result = await ProductService.findById(req, res);
       return res.status(200).json(result)
     } catch (error) {
-      return res.status(400).json({ error });
+      return res.status(404).json({ error });
     }
   },
 
@@ -44,7 +44,7 @@ const ProductController = {
       const result = await ProductService.update(req, res);
       return res.status(200).json(result)
     } catch (error) {
-      return res.status(400).json({ error });
+      return res.status(404).json({ error });
     }
   },
 
@@ -53,7 +53,7 @@ const ProductController = {
       const result = await ProductService.update(req, res);
       return res.status(200).json(result)
     } catch (error) {
-      return res.status(400).json({ error });
+      return res.status(404).json({ error });
     }
   },
 
@@ -62,14 +62,14 @@ const ProductController = {
       await ProductService.delete(req, res);
       return res.status(200).json()
     } catch (error) {
-      return res.status(400).json({ error });
+      return res.status(404).json({ error });
     }
   },
 
   async createCsv(req: Request, res: Response) {
     try {
       await ProductService.createCSV(req, res);
-      return res.status(200).json("Produtos Cadastrados")
+      return res.status(201).json("Produtos Cadastrados")
     } catch (error) {
       return res.status(400).json({ error });
     }
