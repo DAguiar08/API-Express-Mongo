@@ -3,8 +3,6 @@ import ProductController from "../app/controllers/ProductController";
 import createValidation from "../app/validations/Validator"
 import patchValidation from "../app/validations/PatchValidator";
 import GetValidation from "../app/validations/GetValidation";
-//import swaggerUi from "swagger-ui-express"
-//import swaggerDocs from "./swagger.json"
 
 const router = Router();
 
@@ -19,5 +17,3 @@ router
   .delete("/product/:id", ProductController.delete);
 
 export default router;
-
-//app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
