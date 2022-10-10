@@ -5,7 +5,7 @@ import ProductService from "../service/ProductService";
 const ProductController = {
   async index(req: Request, res: Response) {
     try {
-      const result = await ProductService.find(req, res);
+      const result = await ProductService.find(req.query);
       return res.status(200).json(result);
     } catch (error) {
       return res.status(400).json({ error });
@@ -14,7 +14,7 @@ const ProductController = {
 
   async findLowStock(req: Request, res: Response) {
     try {
-      const result = await ProductService.findLowStock(req, res);
+      const result = await ProductService.findLowStock();
       return res.status(200).json(result);
     } catch (error) {
       return res.status(400).json({ error });
@@ -23,7 +23,7 @@ const ProductController = {
 
   async findById(req: Request, res: Response) {
     try {
-      const result = await ProductService.findById(req, res);
+      const result = await ProductService.findById(req);
       return res.status(200).json(result);
     } catch (error) {
       return res.status(404).json({ error });
@@ -32,7 +32,8 @@ const ProductController = {
 
   async create(req: Request, res: Response) {
     try {
-      const result = await ProductService.create(req, res);
+      const payload = req.body
+      const result = await ProductService.create(payload);
       return res.status(201).json(result);
     } catch (error) {
       return res.status(400).json({ error });
@@ -41,7 +42,9 @@ const ProductController = {
 
   async update(req: Request, res: Response) {
     try {
-      const result = await ProductService.update(req, res);
+      const payload = req.body;
+      const { id } = req.params;
+      const result = await ProductService.update(payload, id);
       return res.status(200).json(result);
     } catch (error) {
       return res.status(404).json({ error });
@@ -50,7 +53,9 @@ const ProductController = {
 
   async updateOne(req: Request, res: Response) {
     try {
-      const result = await ProductService.update(req, res);
+      const payload = req.body
+      const { id } = req.params;
+      const result = await ProductService.update(payload, id);
       return res.status(200).json(result);
     } catch (error) {
       return res.status(404).json({ error });
@@ -59,7 +64,7 @@ const ProductController = {
 
   async delete(req: Request, res: Response) {
     try {
-      await ProductService.delete(req, res);
+      await ProductService.delete(req);
       return res.status(200).json();
     } catch (error) {
       return res.status(404).json({ error });
@@ -68,7 +73,7 @@ const ProductController = {
 
   async createCsv(req: Request, res: Response) {
     try {
-      await ProductService.createCSV(req, res);
+      await ProductService.createCSV();
       return res.status(201).json("Produtos Cadastrados");
     } catch (error) {
       return res.status(400).json({ error });

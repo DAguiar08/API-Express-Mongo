@@ -8,15 +8,12 @@ class ProductRepository {
   async create(payload: IProduct): Promise<IProductResponse> {
     return ProductModel.create(payload);
   }
-  async find(
-    payload: FilterQuery<IProduct>
-  ): Promise<typeof Product | unknown> {
-    return await ProductModel.find(payload).limit(50);
+  async find(payload: FilterQuery<IProduct>): Promise<typeof Product | unknown> {
+    return await ProductModel.find(payload)
+      .limit(50);
   }
 
-  async findLowStock(
-    payload: FilterQuery<IProduct>
-  ): Promise<typeof Product | unknown> {
+  async findLowStock(payload: FilterQuery<IProduct>): Promise<typeof Product | unknown> {
     return await ProductModel.find(payload)
       .limit(50)
       .sort({ qtd_stock: "asc" });

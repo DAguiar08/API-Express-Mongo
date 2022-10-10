@@ -1,36 +1,27 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import ProductRepository from "../repository/ProductRepository";
 import ProductModel from "../database/ProductModel";
-import { Request, Response } from "express";
+import { Request } from "express";
 import { readFile } from "fs/promises";
 import Joi from "joi";
+import { IProduct } from "../interfaces/ProductInterface";
+import ValidateCB from "../../utils/ValidateCB";
+import { ParsedQs } from "qs";
 
 class ProductService {
-  async create(req: Request, res: Response) {
-    const payload = req.body;
-    const ValidateCB = await ProductModel.findOne({
-      bar_codes: payload.bar_codes,
-    });
-    if (ValidateCB) {
-      throw console.error("This code bars already exist");
-    } else {
-      if (payload.qtd_stock < 1) {
-        payload.stock_control_enebled = false;
-      } else {
-        payload.stock_control_enebled = true;
-      }
-      await ProductRepository.create(payload);
-    }
+  async create(payload: IProduct) {
+      await ValidateCB(payload);
+      payload.qtd_stock < 1 ? payload.stock_control_enebled = false : payload.stock_control_enebled = true;
+      const result = await ProductRepository.create(payload);
+      return result;
   }
 
-  async find(req: Request, res: Response) {
-    const result = await ProductRepository.find({
-      stock_control_enebled: true,
-    });
+  async find(payload: ParsedQs) {
+    const result = await ProductRepository.find(payload);
     return result;
   }
 
-  async findLowStock(req: Request, res: Response) {
+  async findLowStock() {
     const result = await ProductRepository.findLowStock({
       stock_control_enebled: true,
       qtd_stock: { $lte: 100 },
@@ -38,39 +29,24 @@ class ProductService {
     return result;
   }
 
-  async findById(req: Request, res: Response) {
+  async findById(req: Request) {
     const result = await ProductRepository.findById(req.params.id);
     return result;
   }
 
-  async delete(req: Request, res: Response) {
+  async delete(req: Request) {
     const result = await ProductRepository.delete(req.params.id);
     return result;
   }
 
-  async update(req: Request, res: Response) {
-    const { id } = req.params;
-    const payload = req.body;
-    const data = new Date();
-    const ValidateCB = await ProductModel.findOne({
-      bar_codes: payload.bar_codes,
-    });
-    if (ValidateCB) {
-      throw console.error("This code bars already exists");
-    } else {
-      if (payload.qtd_stock < 1) {
-        payload.stock_control_enebled = false;
-        payload.updated_at = data;
-      } else {
-        payload.stock_control_enebled = true;
-        payload.updated_at = data;
-      }
-    }
+  async update(payload: IProduct, id: string) {
+    await ValidateCB(payload)
+    payload.qtd_stock < 1 ? payload.stock_control_enebled = false : payload.stock_control_enebled = true;
     const result = await ProductRepository.update(id, payload);
     return result;
   }
 
-  async createCSV(req: Request, res: Response) {
+  async createCSV() {
     const readingFile = (await readFile("test.csv")).toString();
     const splitFile = readingFile.split("\r\n");
     const [header, ...files] = splitFile;
