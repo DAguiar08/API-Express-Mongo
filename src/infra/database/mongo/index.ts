@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 class Database {
   constructor() {
@@ -6,8 +6,10 @@ class Database {
   }
 
   connect() {
-    return mongoose
-    .connect(process.env.MONGO_DB_URL || "mongodb+srv://daguiar:Aguiar88@cluster0.etixs0l.mongodb.net/test");
+    return mongoose.connect(
+      process.env.MONGO_DB_URL ||
+        "mongodb+srv://daguiar:Aguiar88@cluster0.etixs0l.mongodb.net/test"
+    );
   }
 }
 

@@ -85,7 +85,7 @@ class ProductService {
         brand: Joi.string().required().trim(),
         price: Joi.number().min(0.01).max(1000).required(),
         qtd_stock: Joi.number().max(100000).required(),
-        bar_codes: Joi.string().length(13).required().trim()  ,
+        bar_codes: Joi.string().length(13).required().trim(),
         stock_control_enebled: Joi.boolean(),
         created_at: Joi.date(),
       })
@@ -94,8 +94,8 @@ class ProductService {
       const splitFiles = i.split(",");
       const ValidateQS = Number(splitFiles[5]);
       const ValidateCB = await ProductModel.findOne({
-        bar_codes: splitFiles[6]
-      })
+        bar_codes: splitFiles[6],
+      });
       if (ValidateQS < 1) {
         arr2.push({
           title: splitFiles[0],
@@ -112,11 +112,11 @@ class ProductService {
         if (error) {
           throw error;
         }
-        if(ValidateCB) {
-          throw console.error("This code bars already exists")
+        if (ValidateCB) {
+          throw console.error("This code bars already exists");
         } else {
-        await ProductRepository.createCSV(arr2);
-      }
+          await ProductRepository.createCSV(arr2);
+        }
       } else {
         arr.push({
           title: splitFiles[0],
@@ -133,11 +133,11 @@ class ProductService {
         if (error) {
           throw error;
         }
-        if(ValidateCB) {
-          throw console.error("This code bars already exists")
+        if (ValidateCB) {
+          throw console.error("This code bars already exists");
         } else {
-        await ProductRepository.createCSV(arr);
-      }
+          await ProductRepository.createCSV(arr);
+        }
       }
     }
   }

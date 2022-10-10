@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {IProduct, IProductResponse,} from "../interfaces/ProductInterface";
+import { IProduct, IProductResponse } from "../interfaces/ProductInterface";
 import ProductModel from "../database/ProductModel";
 import { FilterQuery } from "mongoose";
 import Product from "../database/ProductModel";

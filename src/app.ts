@@ -1,11 +1,11 @@
-import dotenv from 'dotenv';
-import express from 'express';
-import cors from 'cors';
-import routes from './routes/index.router';
-import './infra/database/mongo/index';
+import dotenv from "dotenv";
+import express from "express";
+import cors from "cors";
+import routes from "./routes/index.router";
+import "./infra/database/mongo/index";
 
 dotenv.config({
-  path: '.env'
+  path: ".env",
 });
 
 class App {
@@ -25,7 +25,7 @@ class App {
     this.server.use(express.json({}));
     this.server.use(
       express.urlencoded({
-        extended: true
+        extended: true,
       })
     );
     this.server.use(cors());
