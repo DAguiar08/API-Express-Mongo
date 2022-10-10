@@ -1,3 +1,4 @@
-import ProductRouter from "./ProductRouter";
+import ProductRouter from "./product.router"
+import SwaggerRouter from "./swagger.router"
 
-export default [ProductRouter];
+export default [ProductRouter, SwaggerRouter];
