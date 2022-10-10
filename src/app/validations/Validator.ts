@@ -4,13 +4,13 @@ import Joi from "joi";
 export default async (req: Request, res: Response, next: NextFunction) => {
   try {
     const schema = Joi.object({
-      title: Joi.string().required().trim(),
-      description: Joi.string().required().trim(),
-      departament: Joi.string().required().trim(),
-      brand: Joi.string().required().trim(),
+      title: Joi.string().trim().required(),
+      description: Joi.string().trim().required(),
+      departament: Joi.string().trim().required(),
+      brand: Joi.string().trim().required(),
       price: Joi.number().min(0.01).max(1000).required(),
       qtd_stock: Joi.number().max(100000).required(),
-      bar_codes: Joi.string().length(13).required().trim(),
+      bar_codes: Joi.string().length(13).trim().required(),
       stock_control_enebled: Joi.boolean(),
     });
 
