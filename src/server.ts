@@ -1,24 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import express from "express";
-import mongoose from "mongoose";
-import router from "./routes";
-import swaggerUi from "swagger-ui-express"
-import swaggerDocs from "./swagger.json"
+import App from "./app"
 
-const app = express();
+const app = new App()
 
-app.use(express.json());
-app.use(router);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
-mongoose
-  .connect("mongodb+srv://daguiar:Aguiar88@cluster0.etixs0l.mongodb.net/test")
-  .then((data) => {
-    console.log("MongoDB Connection Succeded");
-  })
-
-  .catch((err) => {
-    console.log("Error in DB connection");
-  });
-
-app.listen(3000);
+app.init().listen(process.env.PORT || 3000, () => {
+  console.info(`App starting at http://localhost:3000`);
+  console.info(`Envs: ${process.env.TARGET || 'local'}`);
+});
