@@ -9,7 +9,6 @@ import { ParsedQs } from "qs";
 
 class ProductService {
   async create(payload: IProduct) {
-      await ValidateCB(payload);
       payload.qtd_stock < 1 ? payload.stock_control_enebled = false : payload.stock_control_enebled = true;
       const result = await ProductRepository.create(payload);
       return result;
@@ -39,7 +38,6 @@ class ProductService {
   }
 
   async update(payload: IProduct, id: string) {
-    await ValidateCB(payload)
     payload.qtd_stock < 1 ? payload.stock_control_enebled = false : payload.stock_control_enebled = true;
     const result = await ProductRepository.update(id, payload);
     return result;
@@ -55,9 +53,6 @@ class ProductService {
     for (const i of files) {
       const splitFiles = i.split(",");
       const ValidateQS = Number(splitFiles[5]);
-      const ValidateCB = await ProductModel.findOne({
-        bar_codes: splitFiles[6],
-      });
       if (ValidateQS < 1) {
         arr.push({
           title: splitFiles[0],
@@ -70,9 +65,6 @@ class ProductService {
           stock_control_enebled: Boolean(false),
           created_at: data,
         });
-        if (ValidateCB) {
-          throw console.error("This code bars already exists");
-        }
       } else {
         arr2.push({
           title: splitFiles[0],
@@ -85,9 +77,6 @@ class ProductService {
           stock_control_enebled: Boolean(true),
           created_at: data,
         });
-        if (ValidateCB) {
-          throw console.error("This code bars already exists");
-        }
       }
     }
     const arr3 = [...arr, ...arr2]

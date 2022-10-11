@@ -10,7 +10,7 @@ const ProductModel = new Schema(
     brand: { type: String, trim: true, required: true },
     price: { type: Number, min: 0.01, max: 1000, required: true },
     qtd_stock: { type: Number, max: 100000, required: true },
-    bar_codes: { type: String, trim: true, required: true },
+    bar_codes: { type: String, trim: true, required: true, unique: true },
     stock_control_enebled: { type: Boolean },
   },
   {
