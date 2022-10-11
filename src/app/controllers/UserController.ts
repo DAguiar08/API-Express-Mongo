@@ -1,11 +1,12 @@
 import UserModel from "../database/UserModel"
 import { Request, Response } from "express";
+import UserService from "../service/UserService";
 
 
 const UserController = {
     async index(req: Request, res: Response) {
         try {
-            const result = await UserModel.find()
+            const result = await UserService.find(req.query)
             return res.status(200).json(result)
         } catch (error) {
             return res.status(404).json(error)
@@ -15,8 +16,7 @@ const UserController = {
 
     async findById(req: Request, res: Response) {
         try {
-            const { id } = req.params
-            const result = await UserModel.findById(id)
+            const result = await UserModel.findById(req)
             return res.status(200).json(result)
         } catch (error) {
             return res.status(404).json(error)
@@ -26,7 +26,7 @@ const UserController = {
     async create(req: Request, res: Response) {
         try {
             const payload = req.body
-            const result = await UserModel.create(payload)
+            const result = await UserService.create(payload)
             return res.status(201).json(result)
         } catch (error) {
             return res.status(400).json(error)
@@ -38,7 +38,7 @@ const UserController = {
         try {
             const { id } = req.params
             const payload = req.body
-            const result = await UserModel.findByIdAndUpdate(id, payload)
+            const result = await UserService.update(payload, id)
             return res.status(200).json(result)
         } catch (error) {
             return res.status(400).json(error)
@@ -47,8 +47,7 @@ const UserController = {
 
     async delete(req: Request, res: Response) {
         try {
-            const { id } = req.params
-            await UserModel.findByIdAndDelete(id)
+            await UserService.delete(req)
             return res.status(200)
         } catch (error) {
             return res.status(404).json(error)

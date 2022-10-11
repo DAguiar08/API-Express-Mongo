@@ -4,7 +4,6 @@ import ProductModel from "../database/ProductModel";
 import { Request } from "express";
 import { readFile } from "fs/promises";
 import { IProduct } from "../interfaces/ProductInterface";
-import ValidateCB from "../utils/ValidateCB";
 import { ParsedQs } from "qs";
 
 class ProductService {
