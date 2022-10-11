@@ -1,10 +1,10 @@
 import { Router } from "express";
 import ProductController from "../app/controllers/ProductController";
-import createValidation from "../app/validations/Validator";
-import patchValidation from "../app/validations/PatchValidator";
-import GetValidation from "../app/validations/GetValidation";
-import PutValidator from "../app/validations/PutValidator";
-import CsvValidator from "../app/validations/CsvValidator";
+import createValidation from "../app/validations/ProductValidations/Validator";
+import patchValidation from "../app/validations/ProductValidations/PatchValidator";
+import GetValidation from "../app/validations/ProductValidations/GetValidation";
+import PutValidator from "../app/validations/ProductValidations/PutValidator";
+import CsvValidator from "../app/validations/ProductValidations/CsvValidator";
 
 const router = Router();
 
