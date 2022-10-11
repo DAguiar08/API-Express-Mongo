@@ -1,5 +1,5 @@
-import ProductModel from "../app/database/ProductModel";
-import { IProduct } from "../app/interfaces/ProductInterface";
+import ProductModel from "../database/ProductModel";
+import { IProduct } from "../interfaces/ProductInterface";
 
 
 async function ValidateCB(payload: IProduct) {
