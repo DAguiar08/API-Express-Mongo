@@ -65,7 +65,7 @@ const ProductController = {
   async delete(req: Request, res: Response) {
     try {
       await ProductService.delete(req);
-      return res.status(200).json();
+      return res.status(204).send();
     } catch (error) {
       return res.status(404).json({ error });
     }
@@ -73,7 +73,7 @@ const ProductController = {
 
   async createCsv(req: Request, res: Response) {
     try {
-      await ProductService.createCSV();
+      await ProductService.createCSV(req);
       return res.status(201).json("Produtos Cadastrados");
     } catch (error) {
       return res.status(400).json({ error });
