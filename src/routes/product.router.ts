@@ -5,15 +5,18 @@ import patchValidation from "../app/validations/ProductValidations/PatchValidato
 import GetValidation from "../app/validations/ProductValidations/GetValidation";
 import PutValidator from "../app/validations/ProductValidations/PutValidator";
 import CsvValidator from "../app/validations/ProductValidations/CsvValidator";
+import multer from "multer";
 
 const router = Router();
+
+const multerConfig = multer();
 
 router
   .get("/products", GetValidation, ProductController.index) //Pode Buscar todos assim como receber filtro
   .get("/product/:id", GetValidation, ProductController.findById) //Busca por ID
   .get("/products/lowstock", GetValidation, ProductController.findLowStock)
   .post("/product", createValidation, ProductController.create)
-  .post("/products/createCSV", CsvValidator, ProductController.createCsv)
+  .post("/products/createCSV", multerConfig.single("file") ,CsvValidator, ProductController.createCsv)
   .put("/product/:id", PutValidator, ProductController.update)
   .patch("/product/:id", patchValidation, ProductController.updateOne)
   .delete("/product/:id", ProductController.delete);

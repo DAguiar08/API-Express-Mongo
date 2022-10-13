@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import ProductRepository from "../repository/ProductRepository";
-import ProductModel from "../database/ProductModel";
 import { Request } from "express";
 import { readFile } from "fs/promises";
 import { IProduct } from "../interfaces/ProductInterface";
 import { ParsedQs } from "qs";
+import fs from "fs"
+import multer from "multer"
 
 class ProductService {
   async create(payload: IProduct) {
@@ -42,9 +43,10 @@ class ProductService {
     return result;
   }
 
-  async createCSV() {
-    const readingFile = (await readFile("test2.csv")).toString();
-    const splitFile = readingFile.split("\r\n");
+  async createCSV(req: Request) {
+    const csv = req.file.buffer
+    const parse= csv.toString()
+    const splitFile = parse.split("\r\n");
     const [header, ...files] = splitFile;
     const arr = [];
     const arr2 = [];
