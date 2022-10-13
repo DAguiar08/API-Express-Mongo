@@ -48,7 +48,7 @@ const UserController = {
     async delete(req: Request, res: Response) {
         try {
             await UserService.delete(req)
-            return res.status(200)
+            return res.status(200).json()
         } catch (error) {
             return res.status(404).json(error)
         }
