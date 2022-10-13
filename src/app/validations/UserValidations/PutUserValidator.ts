@@ -8,7 +8,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
         password: Joi.string().trim().required(),
         cpf: Joi.string().trim().min(14).max(14).required(),
         email: Joi.string().trim().required(),
-        birthday: Joi.string().trim().required()
+        birthday: Joi.date().required()
     });
 
     const { error } = await schema.validate(req.body, { abortEarly: false });
