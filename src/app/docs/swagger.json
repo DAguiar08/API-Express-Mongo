@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "title": "CompassMart API",
-        "description": "Essa API tem como objetivo a manipulação de produtos",
+        "description": "This API is responsible to manipulate products and users endpoints.",
         "termsOfService": "http://localhost:3000/terms",
         "contact": {
             "email": "davibenribaguiar@gmail.com"
@@ -12,14 +12,14 @@
     "servers": [
         {
             "url": "http://localhost:3000",
-            "description": "API de teste"
+            "description": "Test API"
         }
     ],
     "paths": {
         "/products": {
             "get": {
-                "summary": "Busca por todos os produtos",
-                "description": "Busca por todos os produtos com Stock_control_enebled: true",
+                "summary": "Find all",
+                "description": "Find all products",
                 "tags":["Products"],
                 "responses": {
                     "200": {
@@ -39,8 +39,8 @@
         },
         "/products/lowstock" : {
             "get": {
-                "summary": "Busca por todos os produtos com estoque baixo",
-                "description": "Busca por produtos com a info 'qtd_stock' abaixo de 100",
+                "summary": "Find products with low stock",
+                "description": "Find products with low stock",
                 "tags":["Products"],
                 "responses": {
                     "200": {
@@ -59,14 +59,14 @@
         },
         "/product/{id}": {
             "get": {
-                "summary": "Busca por um produto em especifico",
-                "description": "Busca em especifico por um produto utilizando o id como parametro",
+                "summary": "Find by Id",
+                "description": "Find by id a Product",
                 "tags": ["Products"],
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Id do produto para busca",
+                        "description": "Product ID",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -91,14 +91,14 @@
                 }
             },
             "put": {
-                "description": "Altera o produto",
-                "summary": "Altera o produto recebendo o id como parametro",
+                "description": "Update with full body",
+                "summary": "Update",
                 "tags": ["Products"],
                 "parameters":  [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Id do produto para busca",
+                        "description": "Product ID",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -145,14 +145,14 @@
                 }
             },
             "patch": {
-                "description": "Altera o produto sem precisar passar todo o body",
-                "summary": "Altera o produto recebendo o id como parametro",
+                "description": "Update with partial body",
+                "summary": "Update",
                 "tags": ["Products"],
                 "parameters":  [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Id do produto para busca",
+                        "description": "Product ID",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -193,14 +193,14 @@
                 }
             },
             "delete": {
-                "summary": "Deleta produtos pelo id",
-                "description": "Essa rota será responsavel por deletar um produto recebendo o id como parametro",
+                "summary": "Delete",
+                "description": "Delete a product",
                 "tags":["Products"],
                 "parameters":  [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Id do produto para busca",
+                        "description": "Product ID",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -216,8 +216,8 @@
         },
         "/product": {
             "post": {
-                "summary": "Criar novos produtos manualmente",
-                "description": "Essa rota será criar produtos manualmente através do req.body",
+                "summary": "Create",
+                "description": "Create products with req.body",
                 "tags": ["Products"],
                 "requestBody": {
                     "content": {
@@ -261,8 +261,8 @@
         },
         "/products/createCSV": {
             "post": {
-                "summary": "Criar novos produtos através de um arquivo CSV",
-                "description": "Essa rota será responsavel por cadastrar novos produtos através de um .CSV",
+                "summary": "Create with CSV",
+                "description": "Create new products with a .CSV file",
                 "tags": ["Products"],
                 "response": {
                     "200": {
@@ -272,6 +272,225 @@
                                 "schema": {
                                     "type":"object",
                                     "$ref":"#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "summary": "Find all",
+                "description": "Find all Users",
+                "tags":["Users"],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+        },
+        "/user/{id}": {
+            "get": {
+                "summary": "Find by Id",
+                "description": "Find by id an User",
+                "tags": ["Users"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "put": {
+                "description": "Update with full body",
+                "summary": "Update",
+                "tags": ["Users"],
+                "parameters":  [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "product": {
+                                    "value": {
+                                        "name": "Davi",
+                                        "password": "strongpasswordhere",
+                                        "cpf": "020.329.910-19",
+                                        "email": "creativeemailhere@gmail.com",
+                                        "birthday": "10/10/2022"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update with partial body",
+                "summary": "Update",
+                "tags": ["Users"],
+                "parameters":  [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "product": {
+                                    "value": {
+                                        "name": "Davi"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete",
+                "description": "Delete a user",
+                "tags":["Users"],
+                "parameters":  [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/user": {
+            "post": {
+                "summary": "Create",
+                "description": "Create users with req.body",
+                "tags": ["Users"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "product": {
+                                    "value": {
+                                        "name": "Davi",
+                                        "password": "strongpasswordhere",
+                                        "cpf": "020.329.910-19",
+                                        "email": "creativeemailhere@gmail.com",
+                                        "birthday": "10/10/2022"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref":"#/components/schemas/User"
                                 }
                             }
                         }
@@ -306,6 +525,26 @@
                     "bar_codes": {
                         "type": "string"
                     } 
+                }
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "cpf": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "birthday": {
+                        "type": "date"
+                    }
                 }
             }
         }
