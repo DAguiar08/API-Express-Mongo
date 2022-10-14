@@ -26,6 +26,8 @@
 - [Joi: v17.6.0](https://joi.dev/api/?v=17.6.1)
 - [Mongoose: v6.6.1](https://mongoosejs.com/)
 - [Swagger-ui-express: v4.5.0](https://www.npmjs.com/package/swagger-ui-express)
+- [Cors: v2.8.5](https://www.npmjs.com/package/cors)
+- [Dotenv: v16.0.3](https://www.npmjs.com/package/dotenv)
 
 ## DevDependencies
 
@@ -33,6 +35,8 @@
 - [@types/swagger-ui-express: v4.1.3](https://www.npmjs.com/package/@types/swagger-ui-express)
 - [@typescript-eslint/eslint-plugin: v5.38.1](https://www.npmjs.com/package/@typescript-eslint/eslint-plugin)
 - [@typescript-eslint/parser: v5.38.1](https://www.npmjs.com/package/@typescript-eslint/parser)
+- [@yypes/multer: v1.4.7](https://www.npmjs.com/package/@types/multer)
+- [Multer: v1.4.5-lts.1](https://www.npmjs.com/package/multer)
 - [Eslint: v8.24.0](https://eslint.org/)
 - [Prettier: v2.7.1](https://prettier.io/)
 - [Typescript: v4.8.3](https://www.typescriptlang.org/)
@@ -55,20 +59,25 @@ npm install
 
 ## How to set up the DataBase
 
-To connect the database simply change "username and "password" to your user and password from your MongoDB cluster, and finally change "Cluster0" to your cluster.
+To connect the database go to "API-Express-Mongo/src/infra/database/mongo/index.ts" change "username and "password" to your user and password from your MongoDB cluster, and finally change "Cluster0" to your cluster.
 
 ```
-mongoose
-  .connect("mongodb+srv://username:password@cluster0.etixs0l.mongodb.net/test")
-  .then((data) => {
-    console.log("MongoDB Connection Succeded");
-  })
+import mongoose from "mongoose";
 
-  .catch((err) => {
-    console.log("Error in DB connection");
-  });
+class Database {
+  constructor() {
+    this.connect();
+  }
 
-app.listen(3000);
+  connect() {
+    return mongoose.connect(
+      process.env.MONGO_DB_URL ||
+        "mongodb+srv://daguiar:Aguiar88@cluster0.etixs0l.mongodb.net/test"
+    );
+  }
+}
+
+export default new Database().connect();
 ```
 
 ## Documentation :page_facing_up:
@@ -373,7 +382,231 @@ http://localhost:3000/product/:id
 }
 ```
 
+# User Endpoint :family:
 
+## Create
+
+`POST`
+
+```
+http://localhost:3000/user
+```
+
+#### Body exemple
+
+``` 
+{
+    "name": "Davi",
+    "password": "strongpasswordhere",
+    "cpf": "020.329.910-19",
+    "email": "creativeemailhere@gmail.com",
+    "birthday": "10/10/2022"
+}
+```
+`Status code: 201 Created`
+
+```
+{
+    "name": "Davi",
+    "password": "strongpasswordhere",
+    "cpf": "020.329.910-19",
+    "email": "creativeemailhere@gmail.com",
+    "birthday": "10/10/2022"
+    "_id": "633dead10a6a726f2a657f6f"
+    "createdAt": "2022-10-05T20:36:33.765Z"
+    "updatedAt": "2022-10-05T20:36:33.765Z"
+    "__v": 0
+}
+```
+`Status code: 400 Bad request`
+
+```
+"message": "Bad Request",
+    "details": [
+        {
+            "message": "error message of the request"
+        }
+    ]
+}
+```
+
+## Get all users
+
+`GET`
+
+```
+http://localhost:3000/products
+```
+
+`Status code: 200 OK`
+
+```
+{
+    "name": "Davi",
+    "password": "strongpasswordhere",
+    "cpf": "020.329.910-19",
+    "email": "creativeemailhere@gmail.com",
+    "birthday": "10/10/2022"
+    "_id": "633dead10a6a726f2a657f6f"
+    "createdAt": "2022-10-05T20:36:33.765Z"
+    "updatedAt": "2022-10-05T20:36:33.765Z"
+    "__v": 0
+}
+```
+
+`Status code: 400 Bad request`
+
+```
+"message": "Bad Request",
+    "details": [
+        {
+            "message": "error message of the request"
+        }
+    ]
+}
+```
+
+## Get user by ID
+
+`GET`
+
+```
+http://localhost:3000/product/:id
+```
+
+`Status code: 200 OK`
+
+```
+{
+    "name": "Davi",
+    "password": "strongpasswordhere",
+    "cpf": "020.329.910-19",
+    "email": "creativeemailhere@gmail.com",
+    "birthday": "10/10/2022"
+    "_id": "633dead10a6a726f2a657f6f"
+    "createdAt": "2022-10-05T20:36:33.765Z"
+    "updatedAt": "2022-10-05T20:36:33.765Z"
+    "__v": 0
+}
+```
+
+`Status code: 404 not found`
+
+```
+{
+    "errorStatus": 404,
+    "name": "NotFound",
+    "message": "Id '633dead10a6a726f2a657f64' not found"
+}
+```
+
+## Update with full body
+
+`PUT`
+
+```
+http://localhost:3000/product/:id
+```
+
+#### Body exemple
+
+```
+{
+    "name": "Jorge",
+    "password": "strongpasswordhere",
+    "cpf": "020.329.910-19",
+    "email": "creativeemailhere@gmail.com",
+    "birthday": "10/10/2022"
+    "_id": "633dead10a6a726f2a657f6f"
+    "createdAt": "2022-10-05T20:36:33.765Z"
+    "updatedAt": "2022-10-05T20:36:33.765Z"
+    "__v": 0
+}
+```
+`Status code: 200 OK`
+
+```
+{
+    "name": "Jorge",
+    "password": "strongpasswordhere",
+    "cpf": "020.329.910-19",
+    "email": "creativeemailhere@gmail.com",
+    "birthday": "10/10/2022"
+    "_id": "633dead10a6a726f2a657f6f"
+    "createdAt": "2022-10-05T20:36:33.765Z"
+    "updatedAt": "2022-10-05T20:36:33.765Z"
+    "__v": 0
+}
+```
+`Status code: 404 not found`
+
+```
+{
+    "errorStatus": 404,
+    "name": "NotFound",
+    "message": "Id '633dead10a6a726f2a657f64' not found"
+}
+```
+
+## Update with partial body
+
+`PATCH`
+
+```
+http://localhost:3000/product/:id
+```
+
+#### Body exemple
+
+```
+{
+    "title": "Jorge",
+}
+```
+`Status code: 200 OK`
+
+```
+{
+    "name": "Davi",
+    "password": "strongpasswordhere",
+    "cpf": "020.329.910-19",
+    "email": "creativeemailhere@gmail.com",
+    "birthday": "10/10/2022"
+    "_id": "633dead10a6a726f2a657f6f"
+    "createdAt": "2022-10-05T20:36:33.765Z"
+    "updatedAt": "2022-10-05T20:36:33.765Z"
+    "__v": 0
+}
+```
+`Status code: 404 not found`
+
+```
+{
+    "errorStatus": 404,
+    "name": "NotFound",
+    "message": "Id '633dead10a6a726f2a657f64' not found"
+}
+```
+
+## Delete user
+
+`DELETE`
+
+```
+http://localhost:3000/product/:id
+```
+
+`Status code: 200 OK`
+
+`Status code: 404 not found`
+
+```
+{
+    "errorStatus": 404,
+    "name": "NotFound",
+    "message": "Id '633dead10a6a726f2a657f64' not found"
+}
+```
 
 
 ## Licence
