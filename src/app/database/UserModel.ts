@@ -1,7 +1,7 @@
-/* eslint-disable prefer-const */
 import mongoose, { Schema } from "mongoose";
-import ValidateCPF from "../utils/CpfValidation";
 import ValidateEmail from "../utils/EmailValidation";
+import bcrypt from "bcrypt"
+import { NextFunction } from "express";
 
 const UserModel = new Schema(
     {
@@ -12,7 +12,6 @@ const UserModel = new Schema(
             required: true,
             length: 11, 
             unique: true,
-            validate: [ValidateCPF, 'Please fill a with a valid CPF XXX.XXX.XXX-XX'],
         },
         email: {
             type: String,
@@ -29,6 +28,11 @@ const UserModel = new Schema(
         timestamps: true
     }
 )
+
+
+/*UserModel.pre("save", async function name(hash: string) {
+    
+})*/
 
 const User = mongoose.model("User", UserModel)
 
