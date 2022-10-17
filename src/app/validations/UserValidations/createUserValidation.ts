@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
-import BadRequest from "../../errors/BadRequest";
-import ValidateCPF from "../../utils/CpfValidation";
+import ValidateCpf from "../../utils/CpfValidation";
 
 
 export default async (req: Request, res: Response, next: NextFunction) => {
@@ -18,8 +17,9 @@ export default async (req: Request, res: Response, next: NextFunction) => {
         .min(14)
         .max(14)
         .regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/).message("Invalid CPF")
-        .custom((cpf: string) => {
-          if(!ValidateCPF(cpf)) throw new BadRequest(cpf)
+        .custom((cpf, help) => {
+          if (!ValidateCpf(cpf)) return help.message(cpf);
+          return req.body;
         })
         .required(),
         email: Joi.string()
