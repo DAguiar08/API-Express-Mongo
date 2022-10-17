@@ -1,7 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import ValidateEmail from "../utils/EmailValidation";
 import bcrypt from "bcrypt"
-import { NextFunction } from "express";
 
 const UserModel = new Schema(
     {
@@ -30,9 +29,11 @@ const UserModel = new Schema(
 )
 
 
-/*UserModel.pre("save", async function name(hash: string) {
-    
-})*/
+UserModel.pre('save', async function(next) {
+    const hash = await bcrypt.hash(this.password, 10)
+    this.password = hash
+    next();
+  });
 
 const User = mongoose.model("User", UserModel)
 
