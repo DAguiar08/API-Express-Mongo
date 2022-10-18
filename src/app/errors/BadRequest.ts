@@ -1,6 +1,9 @@
+import { IProduct } from "../interfaces/ProductInterface";
+import { IUser } from "../interfaces/UserInterface";
+
 class BadRequest extends Error {
     errorStatus: number;
-    constructor(field: string | number | Date ) {
+    constructor(field: IUser | IProduct) {
       super();
       this.errorStatus = 400;
       this.name = 'Bad Request';

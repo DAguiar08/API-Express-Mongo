@@ -1,45 +1,49 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import ProductRepository from "../repository/ProductRepository";
 import { Request } from "express";
-import { readFile } from "fs/promises";
 import { IProduct } from "../interfaces/ProductInterface";
 import { ParsedQs } from "qs";
-import fs from "fs"
-import multer from "multer"
+import BadRequest from "../errors/BadRequest";
+import NotFound from "../errors/NotFound";
 
 class ProductService {
   async create(payload: IProduct) {
       payload.qtd_stock < 1 ? payload.stock_control_enebled = false : payload.stock_control_enebled = true;
       const result = await ProductRepository.create(payload);
+      if(!result) throw new BadRequest(payload)
       return result;
   }
 
   async find(payload: ParsedQs) {
     const result = await ProductRepository.find(payload);
+    if(!result) throw new NotFound(payload)
     return result;
   }
 
-  async findLowStock() {
+  async findLowStock(payload: ParsedQs) {
     const result = await ProductRepository.findLowStock({
       stock_control_enebled: true,
       qtd_stock: { $lte: 100 },
     });
+    if(!result) throw new NotFound(payload)
     return result;
   }
 
   async findById(req: Request) {
     const result = await ProductRepository.findById(req.params.id);
+    if(!result) throw new NotFound(req.params.id)
     return result;
   }
 
   async delete(req: Request) {
     const result = await ProductRepository.delete(req.params.id);
+    if(!result) throw new NotFound(req.params.id)
     return result;
   }
 
   async update(payload: IProduct, id: string) {
     payload.qtd_stock < 1 ? payload.stock_control_enebled = false : payload.stock_control_enebled = true;
     const result = await ProductRepository.update(id, payload);
+    if(!result) throw new NotFound(id)
     return result;
   }
 
@@ -47,6 +51,7 @@ class ProductService {
     const csv = req.file.buffer
     const parse= csv.toString()
     const splitFile = parse.split("\r\n");
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [header, ...files] = splitFile;
     const arr = [];
     const arr2 = [];
