@@ -1,6 +1,8 @@
 import mongoose, { Schema } from "mongoose";
 import ValidateEmail from "../utils/EmailValidation";
 import bcrypt from "bcrypt"
+import mongoosePaginate from "mongoose-paginate-v2"
+
 
 const UserModel = new Schema(
     {
@@ -19,7 +21,8 @@ const UserModel = new Schema(
             validate: [ValidateEmail, 'Please fill a valid email adress'],
         },
         birthday: {
-            type: Date, 
+            type: Date,
+            max: new Date(),
             required: true,
         }
     },
@@ -28,12 +31,13 @@ const UserModel = new Schema(
     }
 )
 
-
 UserModel.pre('save', async function(next) {
     const hash = await bcrypt.hash(this.password, 10)
     this.password = hash
     next();
   });
+  
+  UserModel.plugin(mongoosePaginate)
 
 const User = mongoose.model("User", UserModel)
 

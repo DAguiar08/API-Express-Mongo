@@ -1,15 +1,35 @@
 import { NextFunction, Request, Response } from "express";
-import Joi from "joi";
+import coreJoi from "joi";
+import joiDate from "@joi/date";
+import ValidateCpf from "../../utils/CpfValidation";
+const Joi = coreJoi.extend(joiDate) as typeof coreJoi;
 
-export default async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const schema = Joi.object({
-        name: Joi.string().trim().required(),
-        password: Joi.string().trim().required(),
-        cpf: Joi.string().trim().min(14).max(14).required(),
-        email: Joi.string().trim().required(),
-        birthday: Joi.date().required()
-    });
+    export default async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const schema = Joi.object({
+          name: Joi.string()
+          .trim()
+          .required(),
+          password: Joi.string()
+           .trim()
+           .required(),
+          cpf: Joi.string()
+          .trim()
+          .min(14)
+          .max(14)
+          .regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/).message("Invalid CPF")
+          .custom((cpf, help) => {
+            if (!ValidateCpf(cpf)) return help.message(cpf);
+            return req.body;
+          })
+          .required(),
+          email: Joi.string()
+           .trim()
+           .required(),
+          birthday: Joi.date()
+          .format("DD/MM/YYYY")
+          .required()
+      });
 
     const { error } = await schema.validate(req.body, { abortEarly: false });
     if (error) {

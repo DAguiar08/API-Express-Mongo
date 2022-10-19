@@ -5,7 +5,7 @@ export interface IUser {
     password: string,
     cpf: string
     email: string
-    birthday: string
+    birthday: Date
 }
 
 export interface IUserResponse {
@@ -13,7 +13,7 @@ export interface IUserResponse {
     password: string,
     cpf: string
     email: string
-    birthday: string
+    birthday: Date
     __v?: number
     _id: Types.ObjectId
 }

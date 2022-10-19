@@ -1,7 +1,7 @@
 import UserModel from "../database/UserModel"
 import { Request, Response } from "express";
 import UserService from "../service/UserService";
-
+import getCorrectPayload from "../utils/Payload";
 
 const UserController = {
     async index(req: Request, res: Response) {
@@ -25,7 +25,7 @@ const UserController = {
 
     async create(req: Request, res: Response) {
         try {
-            const payload = req.body
+            const payload = getCorrectPayload(req.body)
             const result = await UserService.create(payload)
             return res.status(201).json(result)
         } catch (error) {
@@ -37,7 +37,7 @@ const UserController = {
     async update(req: Request, res: Response) {
         try {
             const { id } = req.params
-            const payload = req.body
+            const payload = getCorrectPayload(req.body)
             const result = await UserService.update(payload, id)
             return res.status(200).json(result)
         } catch (error) {
