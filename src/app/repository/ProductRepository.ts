@@ -8,9 +8,9 @@ class ProductRepository {
   async create(payload: IProduct): Promise<IProductResponse> {
     return ProductModel.create(payload);
   }
+  
   async find(payload: FilterQuery<IProduct>): Promise<typeof Product | unknown> {
-    return await ProductModel.find(payload)
-      .limit(50);
+    return await ProductModel.paginate(payload)
   }
 
   async findLowStock(payload: FilterQuery<IProduct>): Promise<typeof Product | unknown> {

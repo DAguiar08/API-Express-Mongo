@@ -9,11 +9,11 @@ export interface IUser {
 }
 
 export interface IUserResponse {
-    name: string,
-    password: string,
-    cpf: string
-    email: string
-    birthday: Date
+    name?: string,
+    password?: string,
+    cpf?: string
+    email?: string
+    birthday?: Date
     __v?: number
     _id: Types.ObjectId
 }

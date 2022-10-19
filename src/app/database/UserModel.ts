@@ -3,7 +3,6 @@ import ValidateEmail from "../utils/EmailValidation";
 import bcrypt from "bcrypt"
 import mongoosePaginate from "mongoose-paginate-v2"
 
-
 const UserModel = new Schema(
     {
         name: {type: String, required: true},

@@ -10,7 +10,7 @@ class UserRepository {
     }
 
     async find(payload: FilterQuery<IUser>): Promise<typeof User | unknown> {
-        return await UserModel.find(payload);
+        return await UserModel.paginate(payload);
     }
 
     async findById(id: string): Promise<typeof User | null> {
