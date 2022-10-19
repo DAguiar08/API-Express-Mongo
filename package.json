@@ -27,12 +27,14 @@
   },
   "dependencies": {
     "@joi/date": "^2.1.0",
+    "@types/mongoose-paginate": "^5.0.12",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
     "joi": "^17.6.0",
     "mongoose": "^6.6.1",
+    "mongoose-paginate-v2": "^1.7.1",
     "swagger-ui-express": "^4.5.0"
   }
 }
