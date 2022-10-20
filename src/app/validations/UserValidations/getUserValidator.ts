@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
+import ErrorLogger from "../../loggers/ErrorLogger";
 
 export default async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -13,6 +14,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 
     const { error } = await schema.validate(req.body, { abortEarly: false });
     if (error) {
+      ErrorLogger.error(error)
       throw error;
     }
     return next();

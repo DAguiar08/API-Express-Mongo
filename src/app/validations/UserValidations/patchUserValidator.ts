@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import coreJoi from "joi";
 import joiDate from "@joi/date";
 import ValidateCpf from "../../utils/CpfValidation";
+import ErrorLogger from "../../loggers/ErrorLogger";
 const Joi = coreJoi.extend(joiDate) as typeof coreJoi;
 
     export default async (req: Request, res: Response, next: NextFunction) => {
@@ -28,6 +29,7 @@ const Joi = coreJoi.extend(joiDate) as typeof coreJoi;
 
     const { error } = await schema.validate(req.body, { abortEarly: false });
     if (error) {
+      ErrorLogger.error(error)
       throw error;
     }
     return next();
