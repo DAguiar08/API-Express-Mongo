@@ -56,8 +56,8 @@ class ProductService {
     const arr = [];
     const arr2 = [];
     const data = new Date();
-    for (const i of files) {
-      const splitFiles = i.split(",");
+    for (const file of files) {
+      const splitFiles = file.split(",");
       const ValidateQS = Number(splitFiles[5]);
       if (ValidateQS < 1) {
         arr.push({
