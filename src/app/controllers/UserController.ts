@@ -1,4 +1,3 @@
-import UserModel from "../database/UserModel"
 import { Request, Response } from "express";
 import UserService from "../service/UserService";
 import getCorrectPayload from "../utils/Payload";
@@ -20,7 +19,7 @@ const UserController = {
 
     async findById(req: Request, res: Response) {
         try {
-            const result = await UserModel.findById(req)
+            const result = await UserService.findById(req)
             logger.info('Successfully got a User')
             return res.status(200).json(result)
         } catch (error) {
