@@ -12,8 +12,8 @@ const router = Router();
 const multerConfig = multer();
 
 router
-  .get("/products", GetValidation, ProductController.index) //Pode Buscar todos assim como receber filtro
-  .get("/product/:id", GetValidation, ProductController.findById) //Busca por ID
+  .get("/products", GetValidation, ProductController.index) 
+  .get("/product/:id", GetValidation, ProductController.findById)
   .get("/products/lowstock", GetValidation, ProductController.findLowStock)
   .post("/product", createValidation, ProductController.create)
   .post("/products/createCSV", multerConfig.single("file") ,CsvValidator, ProductController.createCsv)
