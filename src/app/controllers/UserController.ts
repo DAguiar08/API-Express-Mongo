@@ -54,6 +54,19 @@ const UserController = {
         }
     },
 
+    async updateOne(req: Request, res: Response) {
+        try {
+          const payload = req.body
+          const { id } = req.params;
+          const result = await UserService.update(payload, id);
+          logger.info('Successfully updated a product')
+          return res.status(200).json(result);
+        } catch (error) {
+          ErrorLogger.error(error)
+          return res.status(404).json({ error });
+        }
+      },
+
     async delete(req: Request, res: Response) {
         try {
             await UserService.delete(req)

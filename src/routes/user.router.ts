@@ -12,7 +12,7 @@ router
     .get("/user/:id", getUserValidator, UserController.findById)
     .post("/user", createUserValidation, UserController.create)
     .put("/user/:id", PutUserValidator,UserController.update)
-    .patch("/user/:id", patchUserValidator,UserController.update)
+    .patch("/user/:id", patchUserValidator,UserController.updateOne)
     .delete("/user/:id", UserController.delete)
 
 export default router
