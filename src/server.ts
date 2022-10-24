@@ -1,9 +1,8 @@
-import App from "./app";
-import logger from "./app/loggers/Logger";
+import app from "./app";
 
-const app = new App();
+const port = process.env.PORT || 3000;
 
-app.init().listen(process.env.PORT, () => {
-  logger.info(`App starting at http://localhost:${process.env.PORT}`);
-  logger.info(`Envs: ${process.env.TARGET}`);
-});
+app.listen(port, () => {
+  console.log(`Running on port ${port}`)
+  console.log(`Envs: ${process.env.TARGET}`)
+})
