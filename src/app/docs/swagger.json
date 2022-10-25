@@ -264,17 +264,19 @@
                 "summary": "Create with CSV",
                 "description": "Create new products with a .CSV file",
                 "tags": ["Products"],
-                "response": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type":"object",
-                                    "$ref":"#/components/schemas/Product"
-                                }
+                "requestBody": {
+                    "content": {
+                        "application/octet-stream": {
+                            "schema": {
+                                "type": "string",
+                                "format": "base64"
                             }
                         }
+                    }
+                },
+                "response": {
+                    "200": {
+                        "description": "OK"
                     }
                 }
             }
@@ -359,7 +361,7 @@
                                     "value": {
                                         "name": "Davi",
                                         "password": "strongpasswordhere",
-                                        "cpf": "020.329.910-19",
+                                        "cpf": "050.829.910-19",
                                         "email": "creativeemailhere@gmail.com",
                                         "birthday": "10/10/2022"
                                     }
@@ -471,7 +473,7 @@
                                     "value": {
                                         "name": "Davi",
                                         "password": "strongpasswordhere",
-                                        "cpf": "020.329.910-19",
+                                        "cpf": "050.829.910-19",
                                         "email": "creativeemailhere@gmail.com",
                                         "birthday": "10/10/2022"
                                     }
