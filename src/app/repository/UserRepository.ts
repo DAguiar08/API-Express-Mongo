@@ -25,7 +25,11 @@ class UserRepository {
         return User.findByIdAndUpdate(id, payload);
     }
 
-  
+    async auth(email: string) {
+        return await User.findOne({ email: email}).select('+password')
+        
+    }
+
 }
 
 export default new UserRepository()
