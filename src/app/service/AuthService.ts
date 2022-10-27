@@ -15,12 +15,13 @@ class AuthService {
         }
         
             const secret = process.env.SECRET
-            const token = jwt.sign(
-                {
-                    id: user._id
-                },
-                secret
-        )
+            const token = 
+                jwt.sign(
+                    {
+                        id: user._id
+                    },
+                    secret
+            )
         return { token, email: user.email}
     }
 }

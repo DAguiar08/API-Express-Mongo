@@ -5,6 +5,7 @@ import checkToken from "../middlewares/AuthToken";
 const router = Router();
 
 router
-        .post("/login", checkToken ,AuthController.Login)
+        .post("/login", AuthController.Login)
+        .post("/auth", checkToken, AuthController.Auth)
 
 export default router
