@@ -25,6 +25,7 @@ const Joi = coreJoi.extend(joiDate) as typeof coreJoi;
            .trim(),
           birthday: Joi.date()
           .format("DD/MM/YYYY")
+          .max('now')
       });
 
     const { error } = await schema.validate(req.body, { abortEarly: false });

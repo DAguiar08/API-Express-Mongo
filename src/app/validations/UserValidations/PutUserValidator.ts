@@ -29,6 +29,7 @@ const Joi = coreJoi.extend(joiDate) as typeof coreJoi;
            .required(),
           birthday: Joi.date()
           .format("DD/MM/YYYY")
+          .max('now')
           .required()
       });
 
