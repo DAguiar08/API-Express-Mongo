@@ -1,4 +1,4 @@
-import { Types } from "mongoose"
+import mongoose, { Types } from "mongoose"
 
 export interface IUser {
     name: string,
@@ -17,3 +17,12 @@ export interface IUserResponse {
     __v?: number
     _id: Types.ObjectId
 }
+
+export interface ILogin extends mongoose.Document {
+    name: string,
+    password: string,
+    cpf: string
+    email: string
+    birthday: Date
+  }
+

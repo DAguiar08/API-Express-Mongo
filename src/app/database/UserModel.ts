@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 import ValidateEmail from "../utils/EmailValidation";
 import bcrypt from "bcrypt"
 import mongoosePaginate from "mongoose-paginate-v2"
-import { IUser } from "../interfaces/UserInterface";
+import { ILogin, IUser } from "../interfaces/UserInterface";
 
 const UserModel = new Schema(
     {
@@ -37,24 +37,8 @@ UserModel.pre('save', async function(next) {
     next();
   });
 
-
+UserModel.plugin(mongoosePaginate)
   
-  UserModel.plugin(mongoosePaginate)
-  
-  interface ILogin extends mongoose.Document {
-    name: string,
-    password: string,
-    cpf: string
-    email: string
-    birthday: Date
-  }
-
 const User = mongoose.model<IUser, mongoose.PaginateModel<ILogin>>("User", UserModel)
-
-
-
-User.prototype.checkPassword = function(password: string) {
-    return bcrypt.compare(password, this.password.hash)
-}
 
 export default User
