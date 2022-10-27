@@ -1,6 +1,6 @@
 class Unauthorized extends Error {
     errorStatus: number;
-    constructor(field: any) {
+    constructor(field: string) {
       super();
       this.errorStatus = 401;
       this.name = 'Unauthorized';
