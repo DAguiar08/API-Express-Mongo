@@ -8,4 +8,4 @@ class Unauthorized extends Error {
     }
   }
   
-  module.exports = Unauthorized;
+  export default Unauthorized;

@@ -1,11 +1,11 @@
 import UserRepository from "../repository/UserRepository"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import Unauthorized from "../errors/Unauthorized"
 
 class AuthService {
     async auth(email: string, password: string) {
         const user = await UserRepository.auth(email)
-
         if(!user) {
             throw new Unauthorized(`${email} not found!`);
         }

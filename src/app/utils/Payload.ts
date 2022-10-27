@@ -1,6 +1,8 @@
 import { IUser } from "../interfaces/UserInterface";
+import ValidateDKUser from "./ValidateDKuser";
 
-function getCorrectPayload(payload: IUser) {
+async function getCorrectPayload(payload: IUser) {
+    await ValidateDKUser(payload)
     const tempDateArray = payload.birthday.toString().split('/');
     const formateBirthday = [tempDateArray[2], tempDateArray[1], tempDateArray[0]].join('/')
     const newPayload = {

@@ -4,9 +4,11 @@ import { IProduct } from "../interfaces/ProductInterface";
 import { ParsedQs } from "qs";
 import BadRequest from "../errors/BadRequest";
 import NotFound from "../errors/NotFound";
+import ValidateDKProduct from "../utils/ValidateDKProduct";
 
 class ProductService {
   async create(payload: IProduct) {
+      await ValidateDKProduct(payload)
       payload.qtd_stock < 1 ? payload.stock_control_enebled = false : payload.stock_control_enebled = true;
       const result = await ProductRepository.create(payload);
       if(!result) throw new BadRequest(payload)
@@ -41,6 +43,7 @@ class ProductService {
   }
 
   async update(payload: IProduct, id: string) {
+    await ValidateDKProduct(payload)
     payload.qtd_stock < 1 ? payload.stock_control_enebled = false : payload.stock_control_enebled = true;
     const result = await ProductRepository.update(id, payload);
     if(!result) throw new NotFound(id)

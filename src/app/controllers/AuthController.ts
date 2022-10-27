@@ -9,7 +9,7 @@ async Login(req: Request, res: Response) {
         const result = await AuthService.auth(email, password)
             res.status(200).json(result)
     } catch (error) {
-        return res.status(200).json({ error })
+        return res.status(401).json({ error })
     }
     },
 
@@ -19,7 +19,7 @@ async Auth(req: Request, res: Response) {
         await AuthService.auth(email, password)
             res.status(200).json("Autenticado com sucesso!")
     } catch (error) {
-        return res.status(200).json({ error })
+        return res.status(401).json({ error })
     }
 }
 }

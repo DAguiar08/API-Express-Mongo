@@ -27,7 +27,6 @@ class UserRepository {
 
     async auth(email: string) {
         return await User.findOne({ email: email}).select('+password')
-        
     }
 
 }

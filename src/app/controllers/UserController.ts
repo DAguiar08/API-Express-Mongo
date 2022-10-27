@@ -12,7 +12,7 @@ const UserController = {
             return res.status(200).json(result)
         } catch (error) {
             ErrorLogger.error(error)
-            return res.status(404).json(error)
+            return res.status(400).json(error)
         }
         
     },
@@ -24,19 +24,19 @@ const UserController = {
             return res.status(200).json(result)
         } catch (error) {
             ErrorLogger.error(error)
-            return res.status(404).json(error)
+            return res.status(400).json(error)
         }
     },
 
     async create(req: Request, res: Response) {
         try {
-            const payload = getCorrectPayload(req.body)
+            const payload = await getCorrectPayload(req.body)
             const result = await UserService.create(payload)
             logger.info('Successfully created an User')
             return res.status(201).json(result)
         } catch (error) {
             ErrorLogger.error(error)
-            return res.status(400).json(error)
+            return res.status(500).json(error)
         }
         
     },
@@ -44,7 +44,7 @@ const UserController = {
     async update(req: Request, res: Response) {
         try {
             const { id } = req.params
-            const payload = getCorrectPayload(req.body)
+            const payload = await getCorrectPayload(req.body)
             const result = await UserService.update(payload, id)
             logger.info('Successfully updated an User')
             return res.status(200).json(result)
@@ -63,7 +63,7 @@ const UserController = {
           return res.status(200).json(result);
         } catch (error) {
           ErrorLogger.error(error)
-          return res.status(404).json({ error });
+          return res.status(400).json({ error });
         }
       },
 
@@ -74,7 +74,7 @@ const UserController = {
             return res.status(204).send();
         } catch (error) {
             ErrorLogger.error(error)
-            return res.status(404).json(error)
+            return res.status(400).json(error)
         }
     }
 }
