@@ -53,14 +53,14 @@ class ProductService {
     const splitFile = parse.split("\r\n");
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [header, ...files] = splitFile;
-    const arr = [];
-    const arr2 = [];
-    const data = new Date();
+    const FilesArr = [];
+    const FilesArr2 = [];
+    const TodayDate = new Date();
     for (const file of files) {
       const splitFiles = file.split(",");
       const ValidateQS = Number(splitFiles[5]);
       if (ValidateQS < 1) {
-        arr.push({
+        FilesArr.push({
           title: splitFiles[0],
           description: splitFiles[1],
           departament: splitFiles[2],
@@ -69,10 +69,10 @@ class ProductService {
           qtd_stock: Number(splitFiles[5]),
           bar_codes: splitFiles[6],
           stock_control_enebled: Boolean(false),
-          created_at: data,
+          created_at: TodayDate,
         });
       } else {
-        arr2.push({
+        FilesArr2.push({
           title: splitFiles[0],
           description: splitFiles[1],
           departament: splitFiles[2],
@@ -81,12 +81,12 @@ class ProductService {
           qtd_stock: Number(splitFiles[5]),
           bar_codes: splitFiles[6],
           stock_control_enebled: Boolean(true),
-          created_at: data,
+          created_at: TodayDate,
         });
       }
     }
-    const arr3 = [...arr, ...arr2]
-    await ProductRepository.createCSV(arr3);
+    const FilesArr3 = [...FilesArr, ...FilesArr2]
+    await ProductRepository.createCSV(FilesArr3);
   }
 }
 
