@@ -141,6 +141,9 @@
                     },
                     "400": {
                         "description": "Bad request"
+                    },
+                    "409": {
+                        "description": "Duplicate key"
                     }
                 }
             },
@@ -189,6 +192,9 @@
                     },
                     "400": {
                         "description": "Bad request"
+                    },
+                    "409": {
+                        "description": "Duplicate key"
                     }
                 }
             },
@@ -255,6 +261,12 @@
                                 }
                             }
                         }
+                    },
+                    "409": {
+                        "description": "Duplicate key"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
@@ -392,6 +404,9 @@
                     },
                     "400": {
                         "description": "Bad request"
+                    },
+                    "409": {
+                        "description": "Duplicate key"
                     }
                 }
             },
@@ -440,6 +455,9 @@
                     },
                     "400": {
                         "description": "Bad request"
+                    },
+                    "409": {
+                        "description": "Duplicate key"
                     }
                 }
             },
@@ -504,6 +522,12 @@
                                 }
                             }
                         }
+                    },
+                    "409": {
+                        "description": "Duplicate key"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
