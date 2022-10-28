@@ -1,3 +1,4 @@
+
 class DuplicateKey extends Error {
     errorStatus: number;
     constructor(field: string) {

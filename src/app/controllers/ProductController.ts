@@ -1,4 +1,3 @@
-/* eslint-disable prefer-const */
 import { Request, Response } from "express";
 import ProductService from "../service/ProductService";
 import logger from "../loggers/Logger";
@@ -13,7 +12,7 @@ const ProductController = {
       return res.status(200).json(result);
     } catch (error) {
       ErrorLogger.error(error)
-      return res.status(400).json({ error });
+      return res.status(error.errorStatus || 400).json(error.message || { error });
     }
   },
 
@@ -24,7 +23,7 @@ const ProductController = {
       return res.status(200).json(result);
     } catch (error) {
       ErrorLogger.error(error)
-      return res.status(400).json({ error });
+      return res.status(error.errorStatus || 400).json(error.message || { error });
     }
   },
 
@@ -35,7 +34,7 @@ const ProductController = {
       return res.status(200).json(result);
     } catch (error) {
       ErrorLogger.error(error)
-      return res.status(404).json({ error });
+      return res.status(error.errorStatus || 400).json(error.message || { error });
     }
   },
 
@@ -47,7 +46,7 @@ const ProductController = {
       return res.status(201).json(result);
     } catch (error) {
       ErrorLogger.error(error)
-      return res.status(400).json({ error });
+      return res.status(error.errorStatus || 500).json(error.message || { error });
     }
   },
 
@@ -60,7 +59,7 @@ const ProductController = {
       return res.status(200).json(result);
     } catch (error) {
       ErrorLogger.error(error)
-      return res.status(404).json({ error });
+      return res.status(error.errorStatus || 400).json(error.message || { error });
     }
   },
 
@@ -73,7 +72,7 @@ const ProductController = {
       return res.status(200).json(result);
     } catch (error) {
       ErrorLogger.error(error)
-      return res.status(404).json({ error });
+      return res.status(error.errorStatus || 400).json(error.message || { error });
     }
   },
 
@@ -84,7 +83,7 @@ const ProductController = {
       return res.status(204).send();
     } catch (error) {
       ErrorLogger.error(error)
-      return res.status(404).json({ error });
+      return res.status(error.errorStatus || 400).json(error.message || { error });
     }
   },
 
@@ -95,7 +94,7 @@ const ProductController = {
       return res.status(201).json("Produtos Cadastrados");
     } catch (error) {
       ErrorLogger.error(error)
-      return res.status(400).json({ error });
+      return res.status(error.errorStatus || 400).json(error.message || { error });
     }
   },
 };
