@@ -266,17 +266,25 @@
                 "tags": ["Products"],
                 "requestBody": {
                     "content": {
-                        "application/octet-stream": {
+                        "multipart/form-data": {
                             "schema": {
-                                "type": "string",
-                                "format": "base64"
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "base64"
+                                    }
+                                }
                             }
                         }
                     }
                 },
-                "response": {
+                "responses": {
                     "200": {
                         "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad request"
                     }
                 }
             }
