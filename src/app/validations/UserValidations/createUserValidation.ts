@@ -26,6 +26,7 @@ const Joi = coreJoi.extend(joiDate) as typeof coreJoi;
           .required(),
           email: Joi.string()
            .trim()
+           .email()
            .required(),
           birthday: Joi.date()
           .format("DD/MM/YYYY")

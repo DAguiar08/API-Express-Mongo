@@ -22,6 +22,7 @@ const Joi = coreJoi.extend(joiDate) as typeof coreJoi;
             return req.body;
           }),
           email: Joi.string()
+           .email()
            .trim(),
           birthday: Joi.date()
           .format("DD/MM/YYYY")

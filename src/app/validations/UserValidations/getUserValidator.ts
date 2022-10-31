@@ -8,7 +8,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
         name: Joi.string().trim(),
         password: Joi.string().trim(),
         cpf: Joi.string().trim().min(14).max(14),
-        email: Joi.string().trim(),
+        email: Joi.string().trim().email(),
         birthday: Joi.date().iso().max('now')
     });
 
