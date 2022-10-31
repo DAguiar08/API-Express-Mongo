@@ -7,12 +7,21 @@ describe("List", () => {
         expect(listPerson.statusCode).toBe(200)
     })
 
-    it("Should list a user by ID", async () => {
-        const listPerson = await request(App).get(`/product/63486504e72eb0187b089b9a`).send();
+    it("Should list a Product by ID", async () => {
+        const product = await request(App).post("/product").send({
+            title: "Oleo de soja 500ml",
+            description: "Oleo de soja contendo 500ml da marca soya lote X",
+            departament: "Mercearia",
+            brand: "Soya",
+            qtd_stock: 100,
+            price: 20.00,
+            bar_codes: "qwe123erttyu7"
+           })
+        const listPerson = await request(App).get(`/product/${product.body._id}`).send();
         expect(listPerson.statusCode).toBe(200)
     })
     
-    it("Should not list a user by a wrong ID", async () => {
+    it("Should not list a Product by a wrong ID", async () => {
         const listPerson = await request(App).get(`/product/6352acdf24a0f1e8a62f1863`).send();
         expect(listPerson.statusCode).toBe(404)
     })

@@ -3,33 +3,59 @@ import App from "../../../src/app"
 
 describe("Update", () => {
     it("Should update an user with full body", async () =>{
-        const user = await request(App).put("/user/6357f2e1e3b4738f09ce5faa").send({
-            title: "Oleo de soja 500ml",
-            description: "Oleo de soja contendo 500ml da marca soya lote X",
-            departament: "Mercearia",
-            brand: "Soya",
-            qtd_stock: 100,
-            price: 20.00,
-            bar_codes: "123asd123ajge"
+        const user = await request(App).post("/user").send({
+            name: "Davi",
+            password: "strongpasswordhere",
+            cpf: "972.513.890-29",
+            email: "creativeemailhere@gmail.com",
+            birthday: "15/10/2022"
            })
-           expect(user.statusCode).toBe(200)
-    })
-    it("Should update an user with partial body", async () =>{
-        const user = await request(App).patch("/user/6357f2e1e3b4738f09ce5faa").send({
-            name: "Davi"
+        const Update = await request(App).put(`/user/${user.body._id}`).send({
+            name: "Aguiar",
+            password: "strongpasswordhere",
+            cpf: "330.145.010-50",
+            email: "reativeemailhere@gmail.com",
+            birthday: "15/10/2022"
            })
-           expect(user.statusCode).toBe(200)
+           expect(Update.statusCode).toBe(200)
     })
     it("Should not update an user with invalid CPF", async () =>{
-        const user = await request(App).patch("/user/6357f2e1e3b4738f09ce5faa").send({
+        const user3 = await request(App).post("/user").send({
+            name: "Davi",
+            password: "strongpasswordhere",
+            cpf: "838.465.026-85",
+            email: "creaere@gmail.com",
+            birthday: "15/10/2022"
+           })
+        const Update3 = await request(App).patch(`/user/${user3.body._id}`).send({
             cpf: "111.111.111-11"
         })
-           expect(user.statusCode).toBe(400)
+           expect(Update3.statusCode).toBe(400) 
     })
     it("Should update an user with invalid email", async () =>{
-        const user = await request(App).put("/user/6357f2e1e3b4738f09ce5faa").send({
+        const user4 = await request(App).post("/user").send({
+            name: "Davi",
+            password: "strongpasswordhere",
+            cpf: "236.433.218-48",
+            email: "crlhere@gmail.com",
+            birthday: "15/10/2022"
+           })
+        const Update4 = await request(App).patch(`/user/${user4.body._id}`).send({
             email: "emailgmailcom"
            })
-           expect(user.statusCode).toBe(400)
+           expect(Update4.statusCode).toBe(400)
+    })
+    it("Should update with partial body", async () => {
+        const user2 = await request(App).post("/user").send({
+            name: "Davi",
+            password: "strongpasswordhere",
+            cpf: "046.761.170-00",
+            email: "cere@gmail.com",
+            birthday: "15/10/2022"
+        })
+        const Update2 = await request(App).patch(`/user/${user2.body._id}`).send({
+            name: "DaviA"
+        })
+        expect(Update2.statusCode).toBe(200)
     })
 })
