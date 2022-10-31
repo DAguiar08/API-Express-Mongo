@@ -56,11 +56,18 @@ const UserController = {
 
     async updateOne(req: Request, res: Response) {
         try {
-          const payload = await getCorrectPayload(req.body)
+          const payload = req.body
           const { id } = req.params;
-          const result = await UserService.update(payload, id);
-          logger.info('Successfully updated a product')
-          return res.status(200).json(result);
+          if(!payload.birthday){
+            const result = await UserService.update(payload, id);
+            logger.info('Successfully updated a product')
+            return res.status(200).json(result);
+          } else {
+            const payload2 = await getCorrectPayload(req.body)
+            const result = await UserService.update(payload2, id);
+            logger.info('Successfully updated a product')
+            return res.status(200).json(result);
+          }
         } catch (error) {
           ErrorLogger.error(error)
           return res.status(error.errorStatus || 400).json(error.message || { error });
