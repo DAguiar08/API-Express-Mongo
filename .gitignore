@@ -5,4 +5,4 @@ test.csv
 test2.csv
 salvo.txt
 .env
-__test__/coverage/*
+__tests__/coverage/*
