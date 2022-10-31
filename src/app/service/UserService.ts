@@ -7,7 +7,7 @@ import BadRequest from "../errors/BadRequest";
 import NotFound from "../errors/NotFound";
 import ValidateDKUser from "../utils/ValidateDKuser";
 
-class ProductService {
+class UserService {
     async create(payload: IUser) {
         await ValidateDKUser(payload)
         const result = await UserRepository.create(payload)
@@ -34,11 +34,11 @@ class ProductService {
     }
 
     async update(payload: IUser, id: string) {
+        await ValidateDKUser(payload)
         const result = await UserRepository.update(id, payload);
-        ValidateDKUser(payload)
         if(!result) throw new NotFound(id)
         return result;
     }
 }
 
-export default new ProductService();
+export default new UserService();
