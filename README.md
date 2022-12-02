@@ -76,7 +76,7 @@ class Database {
   connect() {
     return mongoose.connect(
       process.env.MONGO_DB_URL ||
-        "mongodb+srv://daguiar:Aguiar88@cluster0.etixs0l.mongodb.net/test"
+        "mongodb+srv://username:password@cluster0.etixs0l.mongodb.net/test"
     );
   }
 }
